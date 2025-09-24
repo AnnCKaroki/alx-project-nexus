@@ -1,0 +1,29 @@
+INFO 2025-09-25 01:25:38,496 autoreload 11808 14620 Watching for file changes with StatReloader
+INFO 2025-09-25 01:26:12,143 autoreload 8744 2208 Watching for file changes with StatReloader
+WARNING 2025-09-25 01:26:21,324 log 8744 11572 Not Found: /
+WARNING 2025-09-25 01:26:21,325 basehttp 8744 11572 "GET / HTTP/1.1" 404 3362
+WARNING 2025-09-25 01:26:25,038 log 8744 11572 Not Found: /favicon.ico
+WARNING 2025-09-25 01:26:25,069 basehttp 8744 11572 "GET /favicon.ico HTTP/1.1" 404 3413
+WARNING 2025-09-25 01:26:44,370 log 8744 11572 Not Found: /
+WARNING 2025-09-25 01:26:44,372 basehttp 8744 11572 "GET / HTTP/1.1" 404 3362
+INFO 2025-09-25 01:26:50,227 basehttp 8744 11572 "GET /admin HTTP/1.1" 301 0
+INFO 2025-09-25 01:26:50,309 basehttp 8744 10416 "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-09-25 01:26:50,948 basehttp 8744 10416 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4173
+INFO 2025-09-25 01:26:51,873 basehttp 8744 10416 "GET /static/admin/css/base.css HTTP/1.1" 200 22120
+INFO 2025-09-25 01:26:52,222 basehttp 8744 2924 "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+INFO 2025-09-25 01:26:52,261 basehttp 8744 9652 "GET /static/admin/css/login.css HTTP/1.1" 200 951
+INFO 2025-09-25 01:26:52,330 basehttp 8744 15112 "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+INFO 2025-09-25 01:26:52,365 basehttp 8744 12256 "GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+INFO 2025-09-25 01:26:52,449 basehttp 8744 16144 "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+INFO 2025-09-25 01:26:52,528 basehttp 8744 11908 "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+INFO 2025-09-25 01:26:52,576 basehttp 8744 12256 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-09-25 01:26:52,684 basehttp 8744 11908 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+WARNING 2025-09-25 01:27:04,620 log 8744 12256 Not Found: /polls
+WARNING 2025-09-25 01:27:04,621 basehttp 8744 12256 "GET /polls HTTP/1.1" 404 3395
+INFO 2025-09-25 01:28:55,417 basehttp 8744 12256 "GET /auth/login HTTP/1.1" 301 0
+WARNING 2025-09-25 01:28:55,434 log 8744 16144 Method Not Allowed: /auth/login/
+WARNING 2025-09-25 01:28:55,437 basehttp 8744 16144 "GET /auth/login/ HTTP/1.1" 405 40
+WARNING 2025-09-25 01:29:16,610 log 8744 16144 Not Found: /auth/login/ [name='token_obtain_pair']
+WARNING 2025-09-25 01:29:16,610 basehttp 8744 16144 "GET /auth/login/%20[name='token_obtain_pair'] HTTP/1.1" 404 3532
+INFO 2025-09-25 01:30:41,113 autoreload 8744 2208 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\backend\urls.py changed, reloading.
+INFO 2025-09-25 01:30:47,621 autoreload 2344 8216 Watching for file changes with StatReloader

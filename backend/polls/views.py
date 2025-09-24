@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets, permissions, status, generics, serializers
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 from django.db import transaction
 from .models import Poll, Choice, Vote
 from .serializers import PollListSerializer, PollDetailSerializer, VoteSerializer, UserVoteHistorySerializer, PollCreateSerializer
@@ -27,14 +27,7 @@ class PollViewSet(viewsets.ModelViewSet):
     Focused solely on poll management - voting is handled by separate views.
     """
     queryset = Poll.objects.all()
-class PollViewSet(viewsets.ModelViewSet):
-    queryset = Poll.objects.all()
-    serializer_class = PollSerializer
 
-    def get_permissions(self):
-        if self.action in ['create', 'update', 'partial_update', 'destroy']:
-            return [IsAuthenticated(), IsOwnerOrReadOnly()]
-        return [AllowAny()]
     def get_permissions(self):
         """
         Instantiate and return the list of permissions required for this view.

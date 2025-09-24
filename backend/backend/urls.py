@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.http import JsonResponse
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -23,7 +24,26 @@ from rest_framework_simplejwt.views import (
 )
 from polls.auth_views import register_user, logout_user, user_profile
 
+def api_root(request):
+    """Root API endpoint with available endpoints"""
+    return JsonResponse({
+        'message': 'Voting App API',
+        'version': '1.0',
+        'endpoints': {
+            'admin': '/admin/',
+            'authentication': {
+                'login': '/auth/login/',
+                'refresh': '/auth/refresh/', 
+                'register': '/auth/register/',
+                'logout': '/auth/logout/',
+                'profile': '/auth/profile/',
+            },
+            'polls': '/polls/',
+        }
+    })
+
 urlpatterns = [
+    path('', api_root, name='api_root'),  # Root endpoint
     path('admin/', admin.site.urls),
     # Authentication endpoints
     path('auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
