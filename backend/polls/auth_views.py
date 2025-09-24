@@ -75,11 +75,13 @@ def register_user(request):
         }, status=status.HTTP_201_CREATED)
 
     except Exception as e:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.exception("Registration failed for username: %s", username)
         return Response(
             {'error': 'Registration failed'},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
-
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -102,11 +104,13 @@ def logout_user(request):
                 status=status.HTTP_400_BAD_REQUEST
             )
     except Exception as e:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.exception("Logout failed for user: %s", request.user.username)
         return Response(
             {'error': 'Logout failed'},
             status=status.HTTP_400_BAD_REQUEST
         )
-
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
