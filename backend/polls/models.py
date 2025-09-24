@@ -9,6 +9,7 @@ class Poll(models.Model):
     """
     question = models.CharField(max_length=200, help_text="The main question for this poll")
     description = models.TextField(blank=True, help_text="Optional description for the poll")
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='created_polls', help_text="User who created this poll")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True, help_text="Whether this poll is currently active")
