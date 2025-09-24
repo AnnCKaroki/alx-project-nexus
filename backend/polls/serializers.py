@@ -20,10 +20,11 @@ class PollListSerializer(serializers.ModelSerializer):
     Basic serializer for listing polls without nested choices.
     """
     total_votes = serializers.ReadOnlyField()
+    created_by_username = serializers.CharField(source='created_by.username', read_only=True)
 
     class Meta:
         model = Poll
-        fields = ['id', 'question', 'description', 'is_active', 'total_votes', 'created_at']
+        fields = ['id', 'question', 'description', 'is_active', 'total_votes', 'created_by_username', 'created_at']
 
 
 class PollDetailSerializer(serializers.ModelSerializer):
@@ -34,13 +35,14 @@ class PollDetailSerializer(serializers.ModelSerializer):
     total_votes = serializers.ReadOnlyField()
     user_has_voted = serializers.SerializerMethodField()
     user_vote_choice_id = serializers.SerializerMethodField()
+    created_by_username = serializers.CharField(source='created_by.username', read_only=True)
 
     class Meta:
         model = Poll
         fields = [
             'id', 'question', 'description', 'is_active',
             'total_votes', 'choices', 'user_has_voted',
-            'user_vote_choice_id', 'created_at', 'updated_at'
+            'user_vote_choice_id', 'created_by_username', 'created_at', 'updated_at'
         ]
 
     def get_user_has_voted(self, obj):
@@ -128,21 +130,6 @@ class UserVoteHistorySerializer(serializers.ModelSerializer):
         model = Vote
         fields = ['id', 'poll_question', 'choice_text', 'voted_at']
 
-
-class PollCreateSerializer(serializers.ModelSerializer):
-    """
-    Serializer for creating new polls.
-    """
-    choices_data = serializers.ListField(
-        child=serializers.CharField(max_length=200),
-        write_only=True,
-        min_length=2,
-        help_text="List of choice texts for this poll (minimum 2 choices)"
-    )
-
-    class Meta:
-        model = Poll
-        fields = ['question', 'description', 'is_active', 'choices_data']
 
 class PollCreateSerializer(serializers.ModelSerializer):
     """
