@@ -38,7 +38,7 @@ class PollViewSet(viewsets.ModelViewSet):
         """
         Set the creator when creating a new poll.
         """
-        serializer.save()
+        serializer.save(created_by=self.request.user)
 
     @action(detail=True, methods=['get'])
     def results(self, request, pk=None):
@@ -61,6 +61,7 @@ class VoteCreateView(generics.CreateAPIView):
     def perform_create(self, serializer):
         """
         Create vote with current user and proper poll association.
+        Uses select_for_update to prevent race conditions in duplicate vote prevention.
         """
         choice = serializer.validated_data['choice']
 
@@ -70,20 +71,22 @@ class VoteCreateView(generics.CreateAPIView):
                 {'error': 'This poll is not currently active.'}
             )
 
-        # Check for existing vote (this is also handled in serializer but double-check here)
-        existing_vote = Vote.objects.filter(
-            user=self.request.user,
-            poll=choice.poll
-        ).first()
-
-        if existing_vote:
-            raise serializers.ValidationError(
-                {'error': 'You have already voted in this poll.'}
-            )
-
-        # Use transaction for consistency
+        # Use transaction with select_for_update to prevent race conditions
         with transaction.atomic():
-            serializer.save(user=self.request.user, poll=choice.poll)
+            # Lock the poll to prevent concurrent vote creation
+            poll = Poll.objects.select_for_update().get(pk=choice.poll.pk)
+
+            existing_vote = Vote.objects.filter(
+                user=self.request.user,
+                poll=poll
+            ).exists()
+
+            if existing_vote:
+                raise serializers.ValidationError(
+                    {'error': 'You have already voted in this poll.'}
+                )
+
+            serializer.save(user=self.request.user, poll=poll)
 
 
 class UserVoteHistoryView(generics.ListAPIView):
