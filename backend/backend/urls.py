@@ -16,8 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView,
+)
+from polls.auth_views import register_user, logout_user, user_profile
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Authentication endpoints
+    path('auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path('auth/register/', register_user, name='register'),
+    path('auth/logout/', logout_user, name='logout'),
+    path('auth/profile/', user_profile, name='user_profile'),
+    # App endpoints
     path('polls/', include('polls.urls')),
 ]
