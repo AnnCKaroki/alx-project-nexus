@@ -2,17 +2,21 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  // TODO: Connect to AuthContext for persistent login state
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { state, logout } = useAuth();
+  const { isAuthenticated } = state;
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  const handleLogout = () => {
-    // TODO: Clear JWT tokens and redirect to home
-    setIsAuthenticated(false);
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   return (
