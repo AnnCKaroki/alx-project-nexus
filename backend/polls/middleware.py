@@ -1,6 +1,4 @@
-"""
-Custom middleware for the polling application
-"""
+"""Custom middleware for the polling application."""
 import time
 import logging
 from django.core.cache import cache
@@ -14,12 +12,10 @@ User = get_user_model()
 
 
 class RateLimitMiddleware(MiddlewareMixin):
-    """
-    Rate limiting middleware for voting endpoints
-    """
+    """Rate limiting middleware for voting endpoints."""
 
     def get_client_ip(self, request):
-        """Get the client IP address from the request"""
+        """Get client IP address from request."""
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:
             ip = x_forwarded_for.split(',')[0]
@@ -28,14 +24,10 @@ class RateLimitMiddleware(MiddlewareMixin):
         return ip
 
     def process_request(self, request):
-        # Only apply rate limiting to voting endpoints
         if not request.path.startswith('/polls/') or request.method not in ['POST', 'PUT', 'PATCH']:
             return None
 
-        # Get client IP
         client_ip = self.get_client_ip(request)
-
-        # Rate limit: 10 requests per minute per IP for voting actions
         cache_key = f'rate_limit:{client_ip}:{request.path}'
         requests = cache.get(cache_key, 0)
 
@@ -48,14 +40,11 @@ class RateLimitMiddleware(MiddlewareMixin):
                 content_type="application/json"
             )
 
-        # Increment request count
-        cache.set(cache_key, requests + 1, 60)  # 60 seconds
-
+        cache.set(cache_key, requests + 1, 60)
         return None
 
     def should_log_request(self, request):
-        """Determine if this request should be logged"""
-        # Log poll-related POST/PUT/PATCH/DELETE requests
+        """Check if request should be logged."""
         return (
             request.path.startswith('/polls/') and
             request.method in ['POST', 'PUT', 'PATCH', 'DELETE']
@@ -63,9 +52,7 @@ class RateLimitMiddleware(MiddlewareMixin):
 
 
 class RequestLoggingMiddleware(MiddlewareMixin):
-    """
-    Middleware to log requests for polling endpoints
-    """
+    """Request logging middleware for polling endpoints."""
 
     def process_request(self, request):
         if self.should_log_request(request):
@@ -73,7 +60,7 @@ class RequestLoggingMiddleware(MiddlewareMixin):
         return None
 
     def get_client_ip(self, request):
-        """Get the client IP address from the request"""
+        """Get client IP address from request."""
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:
             ip = x_forwarded_for.split(',')[0]
@@ -82,8 +69,7 @@ class RequestLoggingMiddleware(MiddlewareMixin):
         return ip
 
     def should_log_request(self, request):
-        """Determine if this request should be logged"""
-        # Log poll-related POST/PUT/PATCH/DELETE requests
+        """Check if request should be logged."""
         return (
             request.path.startswith('/polls/') and
             request.method in ['POST', 'PUT', 'PATCH', 'DELETE']
@@ -91,27 +77,23 @@ class RequestLoggingMiddleware(MiddlewareMixin):
 
 
 class PollSecurityMiddleware(MiddlewareMixin):
-    """
-    Additional security measures for polling application
-    """
+    """Security headers middleware for polling application."""
 
     def __init__(self, get_response):
         self.get_response = get_response
         super().__init__(get_response)
 
     def process_request(self, request):
-        # Add additional headers for API responses
         return None
 
     def process_response(self, request, response):
-        # Add security headers for poll-related responses
+        """Add security headers for poll-related responses."""
         if request.path.startswith('polls/'):
             response['X-Content-Type-Options'] = 'nosniff'
             response['X-Frame-Options'] = 'DENY'
             response['X-XSS-Protection'] = '1; mode=block'
             response['Referrer-Policy'] = 'strict-origin-when-cross-origin'
 
-            # Prevent caching of sensitive poll data
             if request.method in ['POST', 'PUT', 'PATCH', 'DELETE']:
                 response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
                 response['Pragma'] = 'no-cache'

@@ -89,7 +89,7 @@ Your Django settings are already configured with:
 - **Production + Redis unavailable:** Falls back to database cache
 - **Development:** Uses in-memory cache
 
-✅ **Rate Limiting:** 
+✅ **Rate Limiting:**
 - 10 requests per minute per IP for voting endpoints
 - Uses cache backend (Redis or database)
 

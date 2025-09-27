@@ -88,15 +88,15 @@ This should now pass all security checks when DEBUG=False and proper environment
    # Install Python, pip, and Redis
    sudo apt update
    sudo apt install python3 python3-pip python3-venv redis-server
-   
+
    # Clone your repository
    git clone https://github.com/yourusername/voting-app.git
    cd voting-app/backend
-   
+
    # Create and activate virtual environment
    python3 -m venv pollenv
    source pollenv/bin/activate
-   
+
    # Install dependencies
    pip install -r requirements.txt -r requirements-prod.txt
    ```
@@ -113,7 +113,7 @@ This should now pass all security checks when DEBUG=False and proper environment
    ```bash
    # Test run
    gunicorn backend.wsgi:application --bind 0.0.0.0:8000
-   
+
    # For production, use a process manager like systemd
    ```
 
@@ -138,15 +138,15 @@ This should now pass all security checks when DEBUG=False and proper environment
 1. **Create Dockerfile**:
    ```dockerfile
    FROM python:3.11-slim
-   
+
    WORKDIR /app
    COPY requirements*.txt ./
    RUN pip install -r requirements.txt -r requirements-prod.txt
-   
+
    COPY . .
-   
+
    RUN python manage.py collectstatic --noinput
-   
+
    EXPOSE 8000
    CMD ["gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
    ```
