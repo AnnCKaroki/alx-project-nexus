@@ -14,6 +14,16 @@ from pathlib import Path
 import os
 from django.core.exceptions import ImproperlyConfigured
 
+# Load environment variables from .env file if it exists
+try:
+    from dotenv import load_dotenv
+    env_file = Path(__file__).resolve().parent.parent / '.env'
+    if env_file.exists():
+        load_dotenv(env_file)
+except ImportError:
+    # python-dotenv not installed, environment variables must be set manually
+    pass
+
 
 def get_env_variable(var_name):
     """Get environment variable or raise exception"""
@@ -48,7 +58,16 @@ else:
     SECRET_KEY = get_env_variable('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',') if not DEBUG else []
+# ALLOWED_HOSTS configuration
+if DEBUG:
+    # Development: Allow all hosts
+    ALLOWED_HOSTS = ['*']
+else:
+    # Production: Only allow specific hosts from environment variable
+    hosts_env = os.environ.get('ALLOWED_HOSTS', '')
+    if not hosts_env:
+        raise ImproperlyConfigured('ALLOWED_HOSTS environment variable must be set when DEBUG=False')
+    ALLOWED_HOSTS = [host.strip() for host in hosts_env.split(',') if host.strip()]
 
 
 # Application definition
@@ -129,21 +148,30 @@ if DEBUG:
         }
     }
 else:
-    # Production: Use Redis for distributed caching across multiple processes
-    # Install: pip install redis django-redis
-    CACHES = {
-        'default': {
-            'BACKEND': 'django_redis.cache.RedisCache',
-            'LOCATION': os.environ.get('REDIS_URL', 'redis://localhost:6379/1'),
-            'OPTIONS': {
-                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-                'CONNECTION_POOL_KWARGS': {
-                    'max_connections': 50,
-                    'retry_on_timeout': True,
-                },
+    # Production: Try to use Redis, fall back to database cache if not available
+    try:
+        import django_redis
+        CACHES = {
+            'default': {
+                'BACKEND': 'django_redis.cache.RedisCache',
+                'LOCATION': os.environ.get('REDIS_URL', 'redis://localhost:6379/1'),
+                'OPTIONS': {
+                    'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+                    'CONNECTION_POOL_KWARGS': {
+                        'max_connections': 50,
+                        'retry_on_timeout': True,
+                    },
+                }
             }
         }
-    }
+    except ImportError:
+        # Fallback to database cache if Redis not available
+        CACHES = {
+            'default': {
+                'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+                'LOCATION': 'cache_table',
+            }
+        }
 
 
 # Password validation
@@ -180,7 +208,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Additional locations of static files for development
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+# Media files (user uploaded files)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

@@ -88,3 +88,26 @@ INFO 2025-09-27 21:47:22,733 basehttp 7756 19492 "GET /polls/api/polls/1/ HTTP/1
 INFO 2025-09-27 21:47:39,771 middleware 7756 19492 Poll request: POST /polls/api/votes/ from 127.0.0.1
 INFO 2025-09-27 21:47:39,802 basehttp 7756 19492 "POST /polls/api/votes/ HTTP/1.1" 201 201
 INFO 2025-09-27 21:47:53,406 basehttp 7756 19492 "GET /polls/api/polls/1/ HTTP/1.1" 200 662
+INFO 2025-09-27 21:53:39,128 basehttp 7756 20728 "GET /auth/register HTTP/1.1" 301 0
+WARNING 2025-09-27 21:53:39,144 log 7756 18996 Method Not Allowed: /auth/register/
+WARNING 2025-09-27 21:53:39,147 basehttp 7756 18996 "GET /auth/register/ HTTP/1.1" 405 40
+WARNING 2025-09-27 21:58:14,890 log 7756 18996 Not Found: /profile
+WARNING 2025-09-27 21:58:14,892 basehttp 7756 18996 "GET /profile HTTP/1.1" 404 3561
+WARNING 2025-09-27 21:58:31,994 log 7756 18996 Not Found: /profile
+WARNING 2025-09-27 21:58:31,995 basehttp 7756 18996 "GET /profile HTTP/1.1" 404 3561
+INFO 2025-09-27 21:58:41,079 basehttp 7756 18996 "GET /admin HTTP/1.1" 301 0
+INFO 2025-09-27 21:58:41,109 basehttp 7756 12872 "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-09-27 21:58:41,393 basehttp 7756 12872 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4173
+INFO 2025-09-27 21:58:41,968 basehttp 7756 12872 "GET /static/admin/css/base.css HTTP/1.1" 200 22120
+INFO 2025-09-27 21:58:42,000 basehttp 7756 16380 "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+INFO 2025-09-27 21:58:42,027 basehttp 7756 18352 "GET /static/admin/css/login.css HTTP/1.1" 200 951
+INFO 2025-09-27 21:58:42,041 basehttp 7756 10352 "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+INFO 2025-09-27 21:58:42,058 basehttp 7756 4648 "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+INFO 2025-09-27 21:58:42,064 basehttp 7756 17800 "GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+INFO 2025-09-27 21:58:42,111 basehttp 7756 10352 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-09-27 21:58:55,914 basehttp 7756 10352 "POST /admin/login/?next=/admin/ HTTP/1.1" 200 4339
+INFO 2025-09-27 21:59:49,897 basehttp 7756 9420 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4173
+WARNING 2025-09-27 22:00:17,694 log 7756 9420 Not Found: /login
+WARNING 2025-09-27 22:00:17,696 basehttp 7756 9420 "GET /login HTTP/1.1" 404 3555
+WARNING 2025-09-27 22:00:34,185 log 7756 9420 Method Not Allowed: /auth/login/
+WARNING 2025-09-27 22:00:34,186 basehttp 7756 9420 "GET /auth/login/ HTTP/1.1" 405 40
