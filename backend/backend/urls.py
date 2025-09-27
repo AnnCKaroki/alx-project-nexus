@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.http import JsonResponse
+from django.conf import settings
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -28,12 +29,13 @@ def api_root(request):
     """Root API endpoint with available endpoints"""
     return JsonResponse({
         'message': 'Voting App API',
-        'version': '1.0',
+        'version': getattr(settings, 'API_VERSION', '1.0'),
         'endpoints': {
             'admin': '/admin/',
             'authentication': {
                 'login': '/auth/login/',
-                'refresh': '/auth/refresh/', 
+                'refresh': '/auth/refresh/',
+                'verify': '/auth/verify/',
                 'register': '/auth/register/',
                 'logout': '/auth/logout/',
                 'profile': '/auth/profile/',

@@ -1,0 +1,11 @@
+# Production requirements for Redis caching
+# Install these additional packages for production deployment
+
+redis>=4.5.0
+django-redis>=5.3.0
+
+# These are for distributed caching in production environments
+# Required for proper rate limiting across multiple processes/servers
+
+# Installation command:
+# pip install redis django-redis

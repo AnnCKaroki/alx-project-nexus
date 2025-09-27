@@ -15,16 +15,21 @@ User = get_user_model()
 
 class RateLimitMiddleware(MiddlewareMixin):
     """
-    Rate limiting middleware to prevent abuse of voting endpoints
+    Rate limiting middleware for voting endpoints
     """
 
-    def __init__(self, get_response):
-        self.get_response = get_response
-        super().__init__(get_response)
+    def get_client_ip(self, request):
+        """Get the client IP address from the request"""
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
 
     def process_request(self, request):
         # Only apply rate limiting to voting endpoints
-        if not request.path.startswith('/api/polls/') or request.method not in ['POST', 'PUT', 'PATCH']:
+        if not request.path.startswith('/polls/') or request.method not in ['POST', 'PUT', 'PATCH']:
             return None
 
         # Get client IP
@@ -36,8 +41,9 @@ class RateLimitMiddleware(MiddlewareMixin):
 
         if requests >= 10:
             logger.warning(f"Rate limit exceeded for IP {client_ip} on {request.path}")
+            import json
             return HttpResponse(
-                "Rate limit exceeded. Please try again later.",
+                json.dumps({"error": "Rate limit exceeded. Please try again later."}),
                 status=429,
                 content_type="application/json"
             )
@@ -47,52 +53,41 @@ class RateLimitMiddleware(MiddlewareMixin):
 
         return None
 
+    def should_log_request(self, request):
+        """Determine if this request should be logged"""
+        # Log poll-related POST/PUT/PATCH/DELETE requests
+        return (
+            request.path.startswith('/polls/') and
+            request.method in ['POST', 'PUT', 'PATCH', 'DELETE']
+        )
+
+
+class RequestLoggingMiddleware(MiddlewareMixin):
+    """
+    Middleware to log requests for polling endpoints
+    """
+
+    def process_request(self, request):
+        if self.should_log_request(request):
+            logger.info(f"Poll request: {request.method} {request.path} from {self.get_client_ip(request)}")
+        return None
+
     def get_client_ip(self, request):
-        """Get the client's IP address"""
+        """Get the client IP address from the request"""
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:
             ip = x_forwarded_for.split(',')[0]
         else:
             ip = request.META.get('REMOTE_ADDR')
         return ip
-
-
-class RequestLoggingMiddleware(MiddlewareMixin):
-    """
-    Middleware to log important requests for audit purposes
-    """
-
-    def __init__(self, get_response):
-        self.get_response = get_response
-        super().__init__(get_response)
-
-    def process_request(self, request):
-        # Log voting and poll creation activities
-        if self.should_log_request(request):
-            user_id = request.user.id if request.user.is_authenticated else 'anonymous'
-            logger.info(
-                f"Poll activity - User: {user_id}, IP: {self.get_client_ip(request)}, "
-                f"Method: {request.method}, Path: {request.path}, "
-                f"Timestamp: {timezone.now()}"
-            )
-        return None
 
     def should_log_request(self, request):
         """Determine if this request should be logged"""
         # Log poll-related POST/PUT/PATCH/DELETE requests
         return (
-            request.path.startswith('/api/polls/') and
+            request.path.startswith('/polls/') and
             request.method in ['POST', 'PUT', 'PATCH', 'DELETE']
         )
-
-    def get_client_ip(self, request):
-        """Get the client's IP address"""
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0]
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        return ip
 
 
 class PollSecurityMiddleware(MiddlewareMixin):
@@ -110,7 +105,7 @@ class PollSecurityMiddleware(MiddlewareMixin):
 
     def process_response(self, request, response):
         # Add security headers for poll-related responses
-        if request.path.startswith('/api/polls/'):
+        if request.path.startswith('polls/'):
             response['X-Content-Type-Options'] = 'nosniff'
             response['X-Frame-Options'] = 'DENY'
             response['X-XSS-Protection'] = '1; mode=block'
@@ -121,24 +116,5 @@ class PollSecurityMiddleware(MiddlewareMixin):
                 response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
                 response['Pragma'] = 'no-cache'
                 response['Expires'] = '0'
-
-        return response
-
-
-class CorsCustomMiddleware(MiddlewareMixin):
-    """
-    Custom CORS handling for specific poll endpoints if needed
-    """
-
-    def __init__(self, get_response):
-        self.get_response = get_response
-        super().__init__(get_response)
-
-    def process_response(self, request, response):
-        # Add custom CORS headers for poll endpoints if needed
-        if request.path.startswith('/api/polls/'):
-            # These are already handled by django-cors-headers,
-            # but you can add custom logic here if needed
-            pass
 
         return response

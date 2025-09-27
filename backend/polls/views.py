@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets, permissions, status, generics, serializers
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from django.db import transaction
 from .models import Poll, Choice, Vote
 from .serializers import PollListSerializer, PollDetailSerializer, VoteSerializer, UserVoteHistorySerializer, PollCreateSerializer
