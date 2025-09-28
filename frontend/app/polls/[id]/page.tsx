@@ -1,11 +1,13 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { use, useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Poll, Choice } from '@/types';
 import { useAuth } from '@/contexts/AuthContext';
 import apiClient from '@/lib/api';
 import { calculatePercentage, formatDateWithTime } from '@/lib/utils';
+import SharePoll from '@/components/SharePoll';
 
 interface PollDetailPageProps {
   params: Promise<{
@@ -14,28 +16,28 @@ interface PollDetailPageProps {
 }
 
 export default function PollDetailPage({ params }: PollDetailPageProps) {
-  const [pollId, setPollId] = useState<string | null>(null);
+  // Use React 18+ 'use' hook to handle async params properly
+  const resolvedParams = use(params);
 
-  // Handle async params
-  useEffect(() => {
-    params.then(({ id }) => {
-      setPollId(id);
-    });
-  }, [params]);
-
-  // Don't render until we have the poll ID
-  if (!pollId) {
+  console.log('PollDetailPage: Direct resolved params:', resolvedParams);  if (!resolvedParams?.id) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Error</h1>
+          <p className="text-gray-600 mb-4">No poll ID provided in URL.</p>
+          <Link
+            href="/polls"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+          >
+            Back to Polls
+          </Link>
+        </div>
       </div>
     );
   }
 
-  return <PollDetailPageClient pollId={pollId} />;
-}
-
-function PollDetailPageClient({ pollId }: { pollId: string }) {
+  return <PollDetailPageClient pollId={resolvedParams.id} />;
+}function PollDetailPageClient({ pollId }: { pollId: string }) {
   const [poll, setPoll] = useState<Poll | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -43,7 +45,63 @@ function PollDetailPageClient({ pollId }: { pollId: string }) {
   const [isVoting, setIsVoting] = useState(false);
   const [voteError, setVoteError] = useState<string | null>(null);
   const [voteSuccess, setVoteSuccess] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
   const { state } = useAuth();
+  const router = useRouter();
+
+  // Delete poll function
+  const handleDeletePoll = async () => {
+    if (!poll) return;
+
+    setIsDeleting(true);
+    try {
+      const numericPollId = parseInt(pollId, 10);
+      await apiClient.deletePoll(numericPollId);
+
+      // Redirect to polls page after successful deletion
+      router.push('/polls');
+    } catch (err: unknown) {
+      console.error('Error deleting poll:', err);
+
+      // Show error message
+      if (err && typeof err === 'object' && 'response' in err) {
+        const axiosError = err as { response?: { data?: { error?: string } } };
+        if (axiosError.response?.data?.error) {
+          setError(axiosError.response.data.error);
+        } else {
+          setError('Failed to delete poll. Please try again.');
+        }
+      } else {
+        setError('Failed to delete poll. Please try again.');
+      }
+      setShowDeleteConfirm(false);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  // Early validation of pollId
+  useEffect(() => {
+    console.log('PollDetailPageClient received pollId:', pollId, '(type:', typeof pollId, ')');
+
+    // Check for obviously invalid pollIds
+    if (!pollId || pollId === 'undefined' || pollId === 'null') {
+      console.error('PollDetailPageClient received invalid pollId:', pollId);
+      setError('Invalid poll ID. Please check the URL.');
+      setLoading(false);
+      return;
+    }
+
+    const numericPollId = parseInt(pollId, 10);
+    if (isNaN(numericPollId) || numericPollId <= 0) {
+      console.error('PollDetailPageClient: pollId is not a valid positive number:', pollId);
+      setError('Invalid poll ID. Please check the URL.');
+      setLoading(false);
+      return;
+    }
+  }, [pollId]);
 
   // Fetch poll details
   const fetchPoll = useCallback(async () => {
@@ -51,14 +109,31 @@ function PollDetailPageClient({ pollId }: { pollId: string }) {
       setLoading(true);
       setError(null);
 
-      // Validate poll ID is a valid number
-      const numericPollId = parseInt(pollId, 10);
-      if (isNaN(numericPollId) || numericPollId <= 0) {
+      // Early return if already determined to be invalid
+      if (!pollId || pollId === 'undefined' || pollId === 'null') {
         setError('Invalid poll ID. Please check the URL.');
         return;
       }
 
+      // Validate poll ID is a valid number
+      console.log('fetchPoll: Poll ID from URL:', pollId, '(type:', typeof pollId, ')');
+      const numericPollId = parseInt(pollId, 10);
+      console.log('fetchPoll: Parsed numeric poll ID:', numericPollId, '(isNaN:', isNaN(numericPollId), ', <= 0:', numericPollId <= 0, ')');
+
+      if (isNaN(numericPollId) || numericPollId <= 0) {
+        console.error('fetchPoll: Invalid poll ID validation failed:', {
+          pollId,
+          numericPollId,
+          isNaN: isNaN(numericPollId),
+          lessThanOrEqualZero: numericPollId <= 0
+        });
+        setError('Invalid poll ID. Please check the URL.');
+        return;
+      }
+
+      console.log('fetchPoll: Making API call with pollId:', numericPollId);
       const pollData = await apiClient.getPoll(numericPollId);
+      console.log('fetchPoll: Received poll data:', pollData);
       setPoll(pollData);
 
       // Set selected choice if user has already voted
@@ -66,8 +141,8 @@ function PollDetailPageClient({ pollId }: { pollId: string }) {
         setSelectedChoiceId(pollData.user_choice_id);
       }
     } catch (err) {
+      console.error('fetchPoll: Error fetching poll:', err);
       setError('Failed to load poll. Please try again.');
-      console.error('Error fetching poll:', err);
     } finally {
       setLoading(false);
     }
@@ -247,6 +322,74 @@ function PollDetailPageClient({ pollId }: { pollId: string }) {
                 You have voted
               </div>
             )}
+
+            {/* Share button - available to everyone */}
+            <div className="mt-6 flex gap-3">
+              <button
+                onClick={() => setShowShareModal(true)}
+                className="inline-flex items-center px-4 py-2 border border-blue-300 rounded-md shadow-sm text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              >
+                <svg className="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                </svg>
+                Share Poll
+              </button>
+
+              {/* Delete button for poll creators */}
+              {state.isAuthenticated && poll.created_by === state.user?.id && (
+                <button
+                  onClick={() => setShowDeleteConfirm(true)}
+                  className="inline-flex items-center px-4 py-2 border border-red-300 rounded-md shadow-sm text-sm font-medium text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors"
+                >
+                  <svg className="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1H8a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                  Delete Poll
+                </button>
+              )}
+            </div>
+
+            {/* Delete confirmation modal */}
+            {showDeleteConfirm && (
+              <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+                <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
+                  <div className="flex items-center mb-4">
+                    <svg className="h-6 w-6 text-red-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                    </svg>
+                    <h3 className="text-lg font-semibold text-gray-900">Delete Poll</h3>
+                  </div>
+
+                  <p className="text-gray-600 mb-6">
+                    Are you sure you want to delete this poll? This action cannot be undone.
+                  </p>
+
+                  {poll.total_votes > 0 && (
+                    <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+                      <p className="text-sm text-yellow-800">
+                        <strong>Warning:</strong> This poll has {poll.total_votes} votes. You can only delete polls with no votes.
+                      </p>
+                    </div>
+                  )}
+
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => setShowDeleteConfirm(false)}
+                      className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleDeletePoll}
+                      disabled={isDeleting || poll.total_votes > 0}
+                      className="flex-1 px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isDeleting ? 'Deleting...' : 'Delete Poll'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Voting section or results */}
@@ -390,6 +533,16 @@ function PollDetailPageClient({ pollId }: { pollId: string }) {
           </Link>
         </div>
       </div>
+
+      {/* Share Modal */}
+      {poll && (
+        <SharePoll
+          pollId={poll.id}
+          pollTitle={poll.question}
+          isOpen={showShareModal}
+          onClose={() => setShowShareModal(false)}
+        />
+      )}
     </div>
   );
 }

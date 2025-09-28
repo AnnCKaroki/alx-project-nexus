@@ -82,6 +82,33 @@ class PollViewSet(viewsets.ModelViewSet):
         serializer = PollDetailSerializer(poll, context={'request': request})
         return Response(serializer.data)
 
+    def destroy(self, request, *args, **kwargs):
+        """Delete poll with proper validation."""
+        poll = self.get_object()
+
+        # Only allow poll creator to delete
+        if poll.created_by != request.user:
+            return Response(
+                {'error': 'You can only delete polls you created.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Check if poll has votes
+        total_votes = poll.total_votes
+        if total_votes > 0:
+            return Response(
+                {'error': f'Cannot delete poll with {total_votes} existing votes.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        poll_title = poll.question
+        poll.delete()
+
+        return Response(
+            {'message': f'Poll "{poll_title}" deleted successfully.'},
+            status=status.HTTP_200_OK
+        )
+
 
 class VoteCreateView(generics.CreateAPIView):
     """Create votes with validation and race condition protection."""

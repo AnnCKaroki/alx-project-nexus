@@ -6,8 +6,9 @@ django-cors-headers>=4.9.0
 
 # Database
 # SQLite is included with Django for development
-# Uncomment below for PostgreSQL in production
-# psycopg2>=2.9.0
+# PostgreSQL for production (Render)
+psycopg2-binary>=2.9.0
+dj-database-url>=2.1.0
 
 # Caching and Performance
 redis>=4.5.0

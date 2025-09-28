@@ -6,6 +6,7 @@ import { Poll, PaginatedResponse } from '@/types';
 import { useAuth } from '@/contexts/AuthContext';
 import apiClient from '@/lib/api';
 import { formatDate } from '@/lib/utils';
+import SharePoll from '@/components/SharePoll';
 
 export default function PollsPage() {
   const [polls, setPolls] = useState<Poll[]>([]);
@@ -16,6 +17,10 @@ export default function PollsPage() {
   const [totalCount, setTotalCount] = useState(0);
   const [hasNext, setHasNext] = useState(false);
   const [hasPrevious, setHasPrevious] = useState(false);
+  const [shareModal, setShareModal] = useState<{ isOpen: boolean; poll: Poll | null }>({
+    isOpen: false,
+    poll: null
+  });
   const { state } = useAuth();
 
   // Fetch polls with search and pagination
@@ -24,13 +29,27 @@ export default function PollsPage() {
       setLoading(true);
       setError(null);
 
-      const response: PaginatedResponse<Poll> = await apiClient.getPolls(page, search);
+      const response: PaginatedResponse<Poll> | Poll[] = await apiClient.getPolls(page, search);
       console.log('Polls received on main page:', response);
-      setPolls(response.results || []);
-      setTotalCount(response.count || 0);
-      setHasNext(!!response.next);
-      setHasPrevious(!!response.previous);
-      setCurrentPage(page);
+
+      // Handle both paginated and non-paginated responses
+      if (Array.isArray(response)) {
+        // Non-paginated response (plain array)
+        console.log('Handling non-paginated response');
+        setPolls(response);
+        setTotalCount(response.length);
+        setHasNext(false);
+        setHasPrevious(false);
+        setCurrentPage(1);
+      } else {
+        // Paginated response
+        console.log('Handling paginated response');
+        setPolls(response.results || []);
+        setTotalCount(response.count || 0);
+        setHasNext(!!response.next);
+        setHasPrevious(!!response.previous);
+        setCurrentPage(page);
+      }
     } catch (err) {
       setError('Failed to fetch polls. Please try again.');
       setPolls([]); // Ensure polls is always an array
@@ -165,6 +184,8 @@ export default function PollsPage() {
                   return null;
                 }
 
+                console.log('Rendering poll with ID:', poll.id, '(type:', typeof poll.id, ')');
+
                 return (
                   <div key={poll.id} className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
                     <div className="p-6">
@@ -217,13 +238,26 @@ export default function PollsPage() {
                         </div>
                       </div>
 
-                      <div className="mt-4">
+                      <div className="mt-4 flex items-center justify-between">
                         <Link
                           href={`/polls/${poll.id}`}
                           className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
                         >
                           View Poll →
                         </Link>
+
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setShareModal({ isOpen: true, poll });
+                          }}
+                          className="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100 transition-colors"
+                          title="Share poll"
+                        >
+                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                          </svg>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -302,6 +336,16 @@ export default function PollsPage() {
           </>
         )}
       </div>
+
+      {/* Share Modal */}
+      {shareModal.poll && (
+        <SharePoll
+          pollId={shareModal.poll.id}
+          pollTitle={shareModal.poll.question}
+          isOpen={shareModal.isOpen}
+          onClose={() => setShareModal({ isOpen: false, poll: null })}
+        />
+      )}
     </div>
   );
 }

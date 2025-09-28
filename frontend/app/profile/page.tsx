@@ -39,16 +39,24 @@ export default function ProfilePage() {
         console.log('Current user:', state.user);
         console.log('User ID:', state.user!.id, '(type:', typeof state.user!.id, ')');
 
-        if (allPolls.results) {
-          allPolls.results.forEach(poll => {
-            console.log(`Poll ${poll.id}: "${poll.question}" created_by=${poll.created_by} (type: ${typeof poll.created_by}), matches user: ${poll.created_by === state.user!.id}`);
-            console.log(`  Strict equality: ${poll.created_by === state.user!.id}`);
-            console.log(`  Loose equality: ${poll.created_by == state.user!.id}`);
-            console.log(`  String comparison: "${poll.created_by}" === "${state.user!.id}": ${String(poll.created_by) === String(state.user!.id)}`);
-          });
+        // Handle both paginated and non-paginated responses
+        let pollsArray: Poll[] = [];
+        if (Array.isArray(allPolls)) {
+          // Non-paginated response (plain array)
+          pollsArray = allPolls;
+        } else {
+          // Paginated response
+          pollsArray = allPolls.results || [];
         }
 
-        const userCreatedPolls = (allPolls.results || []).filter(poll => {
+        pollsArray.forEach(poll => {
+          console.log(`Poll ${poll.id}: "${poll.question}" created_by=${poll.created_by} (type: ${typeof poll.created_by}), matches user: ${poll.created_by === state.user!.id}`);
+          console.log(`  Strict equality: ${poll.created_by === state.user!.id}`);
+          console.log(`  Loose equality: ${poll.created_by == state.user!.id}`);
+          console.log(`  String comparison: "${poll.created_by}" === "${state.user!.id}": ${String(poll.created_by) === String(state.user!.id)}`);
+        });
+
+        const userCreatedPolls = pollsArray.filter(poll => {
           // Handle both string and number user IDs
           const pollCreatedBy = Number(poll.created_by);
           const currentUserId = Number(state.user!.id);

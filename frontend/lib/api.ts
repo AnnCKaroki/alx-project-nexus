@@ -140,14 +140,14 @@ class APIClient {
   }
 
   // Paginated polling data with optional search filtering
-  async getPolls(page = 1, search?: string): Promise<PaginatedResponse<Poll>> {
+  async getPolls(page = 1, search?: string): Promise<PaginatedResponse<Poll> | Poll[]> {
     const params = new URLSearchParams();
     params.append('page', page.toString());
     if (search) {
       params.append('search', search);
     }
 
-    const response: AxiosResponse<PaginatedResponse<Poll>> = await this.client.get(
+    const response: AxiosResponse<PaginatedResponse<Poll> | Poll[]> = await this.client.get(
       `/polls/?${params.toString()}`
     );
     return response.data;
