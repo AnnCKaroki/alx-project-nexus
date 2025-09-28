@@ -475,3 +475,13 @@ INFO 2025-09-28 18:10:26,957 basehttp 7164 20816 "GET /polls/5/ HTTP/1.1" 200 44
 INFO 2025-09-28 18:10:26,992 basehttp 7164 20816 "GET /polls/5/ HTTP/1.1" 200 442
 INFO 2025-09-28 18:11:36,878 basehttp 7164 18696 "GET /polls/5/ HTTP/1.1" 200 442
 INFO 2025-09-28 18:11:54,538 basehttp 7164 18732 "GET /polls/5/ HTTP/1.1" 200 442
+INFO 2025-09-28 18:13:38,339 middleware 7164 15784 Poll request: POST /polls/votes/ from 127.0.0.1
+WARNING 2025-09-28 18:13:38,359 log 7164 15784 Method Not Allowed: /polls/votes/
+WARNING 2025-09-28 18:13:38,361 basehttp 7164 15784 "POST /polls/votes/ HTTP/1.1" 405 41
+INFO 2025-09-28 18:22:51,221 autoreload 16836 18356 Watching for file changes with StatReloader
+INFO 2025-09-28 18:23:29,329 autoreload 16836 18356 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\urls.py changed, reloading.
+INFO 2025-09-28 18:23:33,428 autoreload 20528 20180 Watching for file changes with StatReloader
+INFO 2025-09-28 18:23:39,258 autoreload 20528 20180 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\urls.py changed, reloading.
+INFO 2025-09-28 18:23:42,249 autoreload 4976 16096 Watching for file changes with StatReloader
+INFO 2025-09-28 18:24:13,276 autoreload 4976 16096 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\urls.py changed, reloading.
+INFO 2025-09-28 18:24:15,950 autoreload 7832 16404 Watching for file changes with StatReloader
