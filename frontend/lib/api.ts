@@ -18,7 +18,7 @@ class APIClient {
   private baseURL: string;
 
   constructor() {
-    this.baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+    this.baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
     this.client = axios.create({
       baseURL: this.baseURL,
@@ -135,7 +135,7 @@ class APIClient {
   }
 
   async getCurrentUser(): Promise<User> {
-    const response: AxiosResponse<User> = await this.client.get('/auth/user/');
+    const response: AxiosResponse<User> = await this.client.get('/auth/profile/');
     return response.data;
   }
 
@@ -148,28 +148,28 @@ class APIClient {
     }
 
     const response: AxiosResponse<PaginatedResponse<Poll>> = await this.client.get(
-      `/polls/?${params.toString()}`
+      `/polls/api/polls/?${params.toString()}`
     );
     return response.data;
   }
 
   async getPoll(id: number): Promise<Poll> {
-    const response: AxiosResponse<Poll> = await this.client.get(`/polls/${id}/`);
+    const response: AxiosResponse<Poll> = await this.client.get(`/polls/api/polls/${id}/`);
     return response.data;
   }
 
   async createPoll(pollData: CreatePollData): Promise<Poll> {
-    const response: AxiosResponse<Poll> = await this.client.post('/polls/', pollData);
+    const response: AxiosResponse<Poll> = await this.client.post('/polls/api/polls/', pollData);
     return response.data;
   }
 
   async deletePoll(id: number): Promise<void> {
-    await this.client.delete(`/polls/${id}/`);
+    await this.client.delete(`/polls/api/polls/${id}/`);
   }
 
   // Record user vote with immediate result reflection
   async vote(pollId: number, choiceId: number): Promise<Vote> {
-    const response: AxiosResponse<Vote> = await this.client.post('/votes/', {
+    const response: AxiosResponse<Vote> = await this.client.post('/polls/api/votes/', {
       poll: pollId,
       choice: choiceId,
     });
@@ -177,7 +177,7 @@ class APIClient {
   }
 
   async getUserVotes(): Promise<Vote[]> {
-    const response: AxiosResponse<Vote[]> = await this.client.get('/votes/my-votes/');
+    const response: AxiosResponse<Vote[]> = await this.client.get('/polls/api/votes/history/');
     return response.data;
   }
 
