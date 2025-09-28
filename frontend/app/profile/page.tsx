@@ -42,10 +42,18 @@ export default function ProfilePage() {
         if (allPolls.results) {
           allPolls.results.forEach(poll => {
             console.log(`Poll ${poll.id}: "${poll.question}" created_by=${poll.created_by} (type: ${typeof poll.created_by}), matches user: ${poll.created_by === state.user!.id}`);
+            console.log(`  Strict equality: ${poll.created_by === state.user!.id}`);
+            console.log(`  Loose equality: ${poll.created_by == state.user!.id}`);
+            console.log(`  String comparison: "${poll.created_by}" === "${state.user!.id}": ${String(poll.created_by) === String(state.user!.id)}`);
           });
         }
 
-        const userCreatedPolls = (allPolls.results || []).filter(poll => poll.created_by === state.user!.id);
+        const userCreatedPolls = (allPolls.results || []).filter(poll => {
+          // Handle both string and number user IDs
+          const pollCreatedBy = Number(poll.created_by);
+          const currentUserId = Number(state.user!.id);
+          return pollCreatedBy === currentUserId;
+        });
         console.log('Filtered user created polls:', userCreatedPolls);
         console.log('=== END DEBUG ===');
         setUserPolls(userCreatedPolls);
@@ -166,14 +174,14 @@ export default function ProfilePage() {
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-gray-900">
-                  {state.user?.first_name && state.user?.last_name
-                    ? `${state.user.first_name} ${state.user.last_name}`
-                    : state.user?.username
+                  {profile?.user?.first_name && profile?.user?.last_name
+                    ? `${profile.user.first_name} ${profile.user.last_name}`
+                    : profile?.user?.username || state.user?.username
                   }
                 </h2>
-                <p className="text-gray-600">@{state.user?.username}</p>
+                <p className="text-gray-600">@{profile?.user?.username || state.user?.username}</p>
                 <p className="text-sm text-gray-500">
-                  Member since {formatDate(state.user?.date_joined || '')}
+                  Member since {formatDate(profile?.user?.date_joined || state.user?.date_joined || '')}
                 </p>
               </div>
             </div>
@@ -234,22 +242,22 @@ export default function ProfilePage() {
                   <div className="bg-gray-50 rounded-lg p-4 space-y-3">
                     <div className="flex justify-between">
                       <span className="text-sm font-medium text-gray-600">Username:</span>
-                      <span className="text-sm text-gray-900">{state.user?.username}</span>
+                      <span className="text-sm text-gray-900">{profile?.user?.username || state.user?.username}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-sm font-medium text-gray-600">Email:</span>
-                      <span className="text-sm text-gray-900">{state.user?.email}</span>
+                      <span className="text-sm text-gray-900">{profile?.user?.email || state.user?.email}</span>
                     </div>
-                    {state.user?.first_name && (
+                    {(profile?.user?.first_name || state.user?.first_name) && (
                       <div className="flex justify-between">
                         <span className="text-sm font-medium text-gray-600">First Name:</span>
-                        <span className="text-sm text-gray-900">{state.user.first_name}</span>
+                        <span className="text-sm text-gray-900">{profile?.user?.first_name || state.user?.first_name}</span>
                       </div>
                     )}
-                    {state.user?.last_name && (
+                    {(profile?.user?.last_name || state.user?.last_name) && (
                       <div className="flex justify-between">
                         <span className="text-sm font-medium text-gray-600">Last Name:</span>
-                        <span className="text-sm text-gray-900">{state.user.last_name}</span>
+                        <span className="text-sm text-gray-900">{profile?.user?.last_name || state.user?.last_name}</span>
                       </div>
                     )}
                   </div>

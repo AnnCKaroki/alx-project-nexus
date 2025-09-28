@@ -25,6 +25,7 @@ export default function PollsPage() {
       setError(null);
 
       const response: PaginatedResponse<Poll> = await apiClient.getPolls(page, search);
+      console.log('Polls received on main page:', response);
       setPolls(response.results || []);
       setTotalCount(response.count || 0);
       setHasNext(!!response.next);
