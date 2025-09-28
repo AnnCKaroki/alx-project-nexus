@@ -111,3 +111,75 @@ WARNING 2025-09-27 22:00:17,694 log 7756 9420 Not Found: /login
 WARNING 2025-09-27 22:00:17,696 basehttp 7756 9420 "GET /login HTTP/1.1" 404 3555
 WARNING 2025-09-27 22:00:34,185 log 7756 9420 Method Not Allowed: /auth/login/
 WARNING 2025-09-27 22:00:34,186 basehttp 7756 9420 "GET /auth/login/ HTTP/1.1" 405 40
+INFO 2025-09-28 15:04:05,929 autoreload 12384 6344 Watching for file changes with StatReloader
+INFO 2025-09-28 15:08:40,615 autoreload 4828 8764 Watching for file changes with StatReloader
+ERROR 2025-09-28 15:09:03,774 log 4828 11580 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING 2025-09-28 15:09:04,126 basehttp 4828 11580 "GET / HTTP/1.1" 400 143
+ERROR 2025-09-28 15:09:12,616 log 4828 6740 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING 2025-09-28 15:09:12,670 basehttp 4828 6740 "GET / HTTP/1.1" 400 143
+ERROR 2025-09-28 15:09:42,597 log 4828 14568 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING 2025-09-28 15:09:42,612 basehttp 4828 14568 "GET / HTTP/1.1" 400 143
+INFO 2025-09-28 15:11:02,512 autoreload 4828 8764 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\backend\settings.py changed, reloading.
+INFO 2025-09-28 15:11:09,997 autoreload 11028 15944 Watching for file changes with StatReloader
+INFO 2025-09-28 15:11:25,308 autoreload 11028 15944 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\backend\settings.py changed, reloading.
+INFO 2025-09-28 15:11:36,411 autoreload 15576 9700 Watching for file changes with StatReloader
+ERROR 2025-09-28 15:11:57,525 log 15576 5484 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING 2025-09-28 15:11:57,569 basehttp 15576 5484 "GET / HTTP/1.1" 400 143
+INFO 2025-09-28 15:12:22,680 autoreload 19388 8908 Watching for file changes with StatReloader
+ERROR 2025-09-28 15:12:27,742 log 19388 15428 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING 2025-09-28 15:12:27,769 basehttp 19388 15428 "GET / HTTP/1.1" 400 143

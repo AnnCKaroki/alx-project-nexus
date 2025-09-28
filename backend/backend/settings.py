@@ -60,8 +60,8 @@ else:
 # SECURITY WARNING: don't run with debug turned on in production!
 # ALLOWED_HOSTS configuration
 if DEBUG:
-    # Development: Allow all hosts
-    ALLOWED_HOSTS = ['*']
+    # Development: Allow all hosts including localhost variations
+    ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', '0.0.0.0']
 else:
     # Production: Only allow specific hosts from environment variable
     hosts_env = os.environ.get('ALLOWED_HOSTS', '')
