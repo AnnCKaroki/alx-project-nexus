@@ -499,3 +499,45 @@ INFO 2025-09-28 18:25:41,089 basehttp 7832 17868 "GET /auth/profile/ HTTP/1.1" 2
 INFO 2025-09-28 18:25:41,110 basehttp 7832 17868 "GET /auth/profile/ HTTP/1.1" 200 159
 INFO 2025-09-28 18:25:41,177 basehttp 7832 17868 "GET /polls/?page=1 HTTP/1.1" 200 909
 INFO 2025-09-28 18:25:41,243 basehttp 7832 17868 "GET /polls/?page=1 HTTP/1.1" 200 909
+INFO 2025-09-28 18:30:26,715 basehttp 7832 9448 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 18:30:27,204 basehttp 7832 9448 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 18:30:27,473 basehttp 7832 9448 "GET /polls/?page=1 HTTP/1.1" 200 909
+INFO 2025-09-28 18:30:32,573 basehttp 7832 9448 "OPTIONS /auth/login/ HTTP/1.1" 200 0
+INFO 2025-09-28 18:30:37,745 basehttp 7832 9448 "POST /auth/login/ HTTP/1.1" 200 667
+INFO 2025-09-28 18:30:40,120 basehttp 7832 9448 "GET /polls/?page=1 HTTP/1.1" 200 909
+INFO 2025-09-28 18:30:40,315 basehttp 7832 9448 "GET /polls/?page=1 HTTP/1.1" 200 909
+INFO 2025-09-28 18:30:43,432 basehttp 7832 9448 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 18:30:43,661 basehttp 7832 9448 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 18:30:43,845 basehttp 7832 9448 "GET /polls/?page=1 HTTP/1.1" 200 909
+INFO 2025-09-28 18:30:43,946 basehttp 7832 9448 "GET /polls/?page=1 HTTP/1.1" 200 909
+INFO 2025-09-28 18:31:18,228 basehttp 7832 4188 "OPTIONS /polls/ HTTP/1.1" 200 0
+INFO 2025-09-28 18:31:18,231 middleware 7832 4188 Poll request: POST /polls/ from 127.0.0.1
+INFO 2025-09-28 18:31:18,270 basehttp 7832 4188 "POST /polls/ HTTP/1.1" 201 80
+INFO 2025-09-28 18:31:20,028 basehttp 7832 4188 "OPTIONS /polls/6/ HTTP/1.1" 200 0
+INFO 2025-09-28 18:31:20,031 basehttp 7832 18216 "OPTIONS /polls/6/ HTTP/1.1" 200 0
+INFO 2025-09-28 18:31:20,073 basehttp 7832 18216 "GET /polls/6/ HTTP/1.1" 200 442
+INFO 2025-09-28 18:31:20,133 basehttp 7832 18216 "GET /polls/6/ HTTP/1.1" 200 442
+INFO 2025-09-28 18:31:25,558 middleware 7832 18216 Poll request: POST /polls/votes/ from 127.0.0.1
+INFO 2025-09-28 18:31:25,609 basehttp 7832 18216 "POST /polls/votes/ HTTP/1.1" 201 183
+INFO 2025-09-28 18:31:25,666 basehttp 7832 18216 "GET /polls/6/ HTTP/1.1" 200 439
+INFO 2025-09-28 18:31:30,953 basehttp 7832 7768 "GET /polls/?page=1 HTTP/1.1" 200 1078
+INFO 2025-09-28 18:31:31,176 basehttp 7832 7768 "GET /polls/?page=1 HTTP/1.1" 200 1078
+INFO 2025-09-28 18:31:33,816 basehttp 7832 7768 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 18:31:33,835 basehttp 7832 7768 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 18:31:33,890 basehttp 7832 16488 "GET /polls/?page=1 HTTP/1.1" 200 1078
+INFO 2025-09-28 18:31:33,971 basehttp 7832 16488 "GET /polls/?page=1 HTTP/1.1" 200 1078
+INFO 2025-09-28 18:31:39,408 basehttp 7832 10444 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 18:31:39,509 basehttp 7832 10444 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 18:31:39,610 basehttp 7832 10444 "GET /polls/?page=1 HTTP/1.1" 200 1078
+INFO 2025-09-28 18:33:19,962 autoreload 7832 16404 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\serializers.py changed, reloading.
+INFO 2025-09-28 18:33:24,163 autoreload 10468 8040 Watching for file changes with StatReloader
+INFO 2025-09-28 18:33:36,777 autoreload 10468 8040 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\serializers.py changed, reloading.
+INFO 2025-09-28 18:33:39,411 autoreload 6368 4300 Watching for file changes with StatReloader
+INFO 2025-09-28 18:33:53,839 autoreload 6368 4300 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\serializers.py changed, reloading.
+INFO 2025-09-28 18:33:57,818 autoreload 16880 17348 Watching for file changes with StatReloader
+INFO 2025-09-28 18:34:07,590 autoreload 16880 17348 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\serializers.py changed, reloading.
+INFO 2025-09-28 18:34:10,395 autoreload 16944 11808 Watching for file changes with StatReloader
+INFO 2025-09-28 18:34:50,005 autoreload 16944 11808 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\serializers.py changed, reloading.
+INFO 2025-09-28 18:34:54,341 autoreload 16840 20616 Watching for file changes with StatReloader
+INFO 2025-09-28 18:36:57,781 autoreload 16840 20616 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\serializers.py changed, reloading.
+INFO 2025-09-28 18:37:01,519 autoreload 11804 15696 Watching for file changes with StatReloader

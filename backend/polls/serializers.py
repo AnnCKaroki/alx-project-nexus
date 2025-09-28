@@ -18,10 +18,19 @@ class PollListSerializer(serializers.ModelSerializer):
     """Basic poll list serializer without nested choices."""
     total_votes = serializers.ReadOnlyField()
     created_by_username = serializers.CharField(source='created_by.username', read_only=True)
+    pub_date = serializers.DateTimeField(source='created_at', read_only=True)
+    user_has_voted = serializers.SerializerMethodField()
 
     class Meta:
         model = Poll
-        fields = ['id', 'question', 'description', 'is_active', 'total_votes', 'created_by_username', 'created_at']
+        fields = ['id', 'question', 'description', 'is_active', 'total_votes', 'created_by', 'created_by_username', 'pub_date', 'user_has_voted']
+
+    def get_user_has_voted(self, obj):
+        """Check if current user has voted in this poll."""
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return Vote.objects.filter(user=request.user, poll=obj).exists()
+        return False
 
 
 class PollDetailSerializer(serializers.ModelSerializer):
@@ -29,15 +38,16 @@ class PollDetailSerializer(serializers.ModelSerializer):
     choices = ChoiceSerializer(many=True, read_only=True)
     total_votes = serializers.ReadOnlyField()
     user_has_voted = serializers.SerializerMethodField()
-    user_vote_choice_id = serializers.SerializerMethodField()
+    user_choice_id = serializers.SerializerMethodField()
     created_by_username = serializers.CharField(source='created_by.username', read_only=True)
+    pub_date = serializers.DateTimeField(source='created_at', read_only=True)
 
     class Meta:
         model = Poll
         fields = [
             'id', 'question', 'description', 'is_active',
             'total_votes', 'choices', 'user_has_voted',
-            'user_vote_choice_id', 'created_by_username', 'created_at', 'updated_at'
+            'user_choice_id', 'created_by', 'created_by_username', 'pub_date', 'created_at', 'updated_at'
         ]
 
     def get_user_has_voted(self, obj):
@@ -47,7 +57,7 @@ class PollDetailSerializer(serializers.ModelSerializer):
             return Vote.objects.filter(user=request.user, poll=obj).exists()
         return False
 
-    def get_user_vote_choice_id(self, obj):
+    def get_user_choice_id(self, obj):
         """Get choice ID that current user voted for."""
         request = self.context.get('request')
         if request and request.user.is_authenticated:

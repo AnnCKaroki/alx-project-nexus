@@ -97,7 +97,7 @@ function PollDetailPageClient({ pollId }: { pollId: string }) {
       setVoteSuccess(true);
       // Refresh poll data to show updated results
       await fetchPoll();
-      
+
       // Show success message for 3 seconds, then optionally redirect
       setTimeout(() => {
         setVoteSuccess(false);
