@@ -50,7 +50,14 @@ function PollDetailPageClient({ pollId }: { pollId: string }) {
       setLoading(true);
       setError(null);
 
-      const pollData = await apiClient.getPoll(parseInt(pollId));
+      // Validate poll ID is a valid number
+      const numericPollId = parseInt(pollId, 10);
+      if (isNaN(numericPollId) || numericPollId <= 0) {
+        setError('Invalid poll ID. Please check the URL.');
+        return;
+      }
+
+      const pollData = await apiClient.getPoll(numericPollId);
       setPoll(pollData);
 
       // Set selected choice if user has already voted
@@ -73,11 +80,18 @@ function PollDetailPageClient({ pollId }: { pollId: string }) {
   const handleVote = async () => {
     if (!selectedChoiceId || !state.isAuthenticated) return;
 
+    // Validate poll ID is a valid number
+    const numericPollId = parseInt(pollId, 10);
+    if (isNaN(numericPollId) || numericPollId <= 0) {
+      setVoteError('Invalid poll ID. Cannot submit vote.');
+      return;
+    }
+
     setIsVoting(true);
     setVoteError(null);
 
     try {
-      await apiClient.vote(parseInt(pollId), selectedChoiceId);
+      await apiClient.vote(numericPollId, selectedChoiceId);
       // Refresh poll data to show updated results
       await fetchPoll();
     } catch (err) {

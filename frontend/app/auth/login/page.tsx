@@ -31,7 +31,7 @@ export default function LoginPage() {
       await login(credentials);
       // Show success state briefly before redirect
       setLoginSuccess(true);
-      
+
       // Add a small delay to show success feedback
       setTimeout(() => {
         router.push('/polls');

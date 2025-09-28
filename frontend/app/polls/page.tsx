@@ -157,69 +157,77 @@ export default function PollsPage() {
         {!loading && polls && polls.length > 0 && (
           <>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {polls.map((poll) => (
-                <div key={poll.id} className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
-                  <div className="p-6">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                          <Link
-                            href={`/polls/${poll.id}`}
-                            className="hover:text-blue-600 transition-colors"
-                          >
-                            {poll.question}
-                          </Link>
-                        </h3>
+              {polls.map((poll) => {
+                // Safety check for valid poll ID
+                if (!poll.id || isNaN(Number(poll.id))) {
+                  console.warn('Invalid poll ID found:', poll.id, poll);
+                  return null;
+                }
 
-                        {poll.description && (
-                          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                            {poll.description}
-                          </p>
-                        )}
+                return (
+                  <div key={poll.id} className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                    <div className="p-6">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                            <Link
+                              href={`/polls/${poll.id}`}
+                              className="hover:text-blue-600 transition-colors"
+                            >
+                              {poll.question}
+                            </Link>
+                          </h3>
 
-                        <div className="flex items-center justify-between text-sm text-gray-500">
-                          <div className="flex items-center space-x-4">
-                            <span className="flex items-center">
-                              <svg className="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                              </svg>
-                              {poll.total_votes} votes
-                            </span>
+                          {poll.description && (
+                            <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                              {poll.description}
+                            </p>
+                          )}
 
-                            <span className="flex items-center">
-                              <svg className="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                              </svg>
-                              {formatDate(poll.pub_date)}
-                            </span>
+                          <div className="flex items-center justify-between text-sm text-gray-500">
+                            <div className="flex items-center space-x-4">
+                              <span className="flex items-center">
+                                <svg className="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                {poll.total_votes} votes
+                              </span>
+
+                              <span className="flex items-center">
+                                <svg className="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                {formatDate(poll.pub_date)}
+                              </span>
+                            </div>
+
+                            {poll.user_has_voted && (
+                              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                Voted
+                              </span>
+                            )}
                           </div>
 
-                          {poll.user_has_voted && (
-                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                              Voted
-                            </span>
+                          {poll.created_by_username && (
+                            <div className="mt-3 text-xs text-gray-500">
+                              Created by {poll.created_by_username}
+                            </div>
                           )}
                         </div>
+                      </div>
 
-                        {poll.created_by_username && (
-                          <div className="mt-3 text-xs text-gray-500">
-                            Created by {poll.created_by_username}
-                          </div>
-                        )}
+                      <div className="mt-4">
+                        <Link
+                          href={`/polls/${poll.id}`}
+                          className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
+                        >
+                          View Poll →
+                        </Link>
                       </div>
                     </div>
-
-                    <div className="mt-4">
-                      <Link
-                        href={`/polls/${poll.id}`}
-                        className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
-                      >
-                        View Poll →
-                      </Link>
-                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              }).filter(Boolean)}
             </div>
 
             {/* Pagination */}

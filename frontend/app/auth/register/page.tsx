@@ -75,7 +75,7 @@ export default function RegisterPage() {
       await register(formData);
       // Show success state briefly before redirect
       setRegistrationSuccess(true);
-      
+
       // Add a small delay to show success feedback
       setTimeout(() => {
         router.push('/polls');
