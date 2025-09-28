@@ -42,6 +42,7 @@ function PollDetailPageClient({ pollId }: { pollId: string }) {
   const [selectedChoiceId, setSelectedChoiceId] = useState<number | null>(null);
   const [isVoting, setIsVoting] = useState(false);
   const [voteError, setVoteError] = useState<string | null>(null);
+  const [voteSuccess, setVoteSuccess] = useState(false);
   const { state } = useAuth();
 
   // Fetch poll details
@@ -89,11 +90,18 @@ function PollDetailPageClient({ pollId }: { pollId: string }) {
 
     setIsVoting(true);
     setVoteError(null);
+    setVoteSuccess(false);
 
     try {
       await apiClient.vote(numericPollId, selectedChoiceId);
+      setVoteSuccess(true);
       // Refresh poll data to show updated results
       await fetchPoll();
+      
+      // Show success message for 3 seconds, then optionally redirect
+      setTimeout(() => {
+        setVoteSuccess(false);
+      }, 3000);
     } catch (err) {
       setVoteError('Failed to submit vote. Please try again.');
       console.error('Error voting:', err);
@@ -333,6 +341,17 @@ function PollDetailPageClient({ pollId }: { pollId: string }) {
                 {voteError && (
                   <div className="mb-4 bg-red-50 border border-red-200 rounded-md p-4">
                     <p className="text-sm text-red-800">{voteError}</p>
+                  </div>
+                )}
+
+                {voteSuccess && (
+                  <div className="mb-4 bg-green-50 border border-green-200 rounded-md p-4">
+                    <div className="flex items-center">
+                      <svg className="h-5 w-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <p className="text-sm text-green-800">Vote submitted successfully! Results updated below.</p>
+                    </div>
                   </div>
                 )}
 

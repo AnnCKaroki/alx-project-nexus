@@ -485,3 +485,17 @@ INFO 2025-09-28 18:23:39,258 autoreload 20528 20180 C:\Users\User\OneDrive\Deskt
 INFO 2025-09-28 18:23:42,249 autoreload 4976 16096 Watching for file changes with StatReloader
 INFO 2025-09-28 18:24:13,276 autoreload 4976 16096 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\urls.py changed, reloading.
 INFO 2025-09-28 18:24:15,950 autoreload 7832 16404 Watching for file changes with StatReloader
+INFO 2025-09-28 18:24:51,643 middleware 7832 11004 Poll request: POST /polls/votes/ from 127.0.0.1
+INFO 2025-09-28 18:24:51,980 basehttp 7832 11004 "POST /polls/votes/ HTTP/1.1" 201 183
+INFO 2025-09-28 18:24:52,045 basehttp 7832 11004 "GET /polls/5/ HTTP/1.1" 200 439
+INFO 2025-09-28 18:24:57,190 basehttp 7832 8204 "OPTIONS /polls/?page=1 HTTP/1.1" 200 0
+INFO 2025-09-28 18:24:57,198 basehttp 7832 12728 "OPTIONS /polls/?page=1 HTTP/1.1" 200 0
+INFO 2025-09-28 18:24:57,239 basehttp 7832 12728 "GET /polls/?page=1 HTTP/1.1" 200 909
+INFO 2025-09-28 18:24:57,271 basehttp 7832 12728 "GET /polls/?page=1 HTTP/1.1" 200 909
+INFO 2025-09-28 18:25:02,750 basehttp 7832 12728 "OPTIONS /auth/profile/ HTTP/1.1" 200 0
+INFO 2025-09-28 18:25:02,779 basehttp 7832 8204 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 18:25:02,811 basehttp 7832 12728 "GET /polls/?page=1 HTTP/1.1" 200 909
+INFO 2025-09-28 18:25:41,089 basehttp 7832 17868 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 18:25:41,110 basehttp 7832 17868 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 18:25:41,177 basehttp 7832 17868 "GET /polls/?page=1 HTTP/1.1" 200 909
+INFO 2025-09-28 18:25:41,243 basehttp 7832 17868 "GET /polls/?page=1 HTTP/1.1" 200 909

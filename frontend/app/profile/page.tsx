@@ -33,7 +33,7 @@ export default function ProfilePage() {
 
         // Fetch user's polls by filtering all polls for the user
         const allPolls = await apiClient.getPolls(1);
-        const userCreatedPolls = allPolls.results.filter(poll => poll.created_by === state.user!.id);
+        const userCreatedPolls = (allPolls.results || []).filter(poll => poll.created_by === state.user!.id);
         setUserPolls(userCreatedPolls);
       } catch (err) {
         setError('Failed to load profile data. Please try again.');
