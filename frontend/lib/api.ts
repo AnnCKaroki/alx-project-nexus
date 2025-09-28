@@ -169,6 +169,7 @@ class APIClient {
 
     // Debug log to see what we're getting back
     console.log('Poll creation response:', response.data);
+    console.log('Created poll created_by field:', response.data.created_by);
 
     return response.data;
   }

@@ -61,6 +61,20 @@ class PollViewSet(viewsets.ModelViewSet):
         """Set creator when creating new poll."""
         serializer.save(created_by=self.request.user)
 
+    def create(self, request, *args, **kwargs):
+        """Override create to return full poll data after creation."""
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        # Return full poll data using PollDetailSerializer
+        poll = serializer.instance
+        print(f"Created poll: {poll.question} by user {poll.created_by} (ID: {poll.created_by.id})")  # Debug
+        response_serializer = PollDetailSerializer(poll, context={'request': request})
+        print(f"Serialized data created_by: {response_serializer.data.get('created_by')}")  # Debug
+        headers = self.get_success_headers(response_serializer.data)
+        return Response(response_serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
     @action(detail=True, methods=['get'])
     def results(self, request, pk=None):
         """Get poll results with vote counts."""

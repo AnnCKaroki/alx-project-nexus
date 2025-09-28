@@ -594,3 +594,22 @@ INFO 2025-09-28 18:44:54,674 basehttp 19960 18564 "GET /auth/profile/ HTTP/1.1" 
 INFO 2025-09-28 18:44:54,769 basehttp 19960 18564 "GET /auth/profile/ HTTP/1.1" 200 682
 INFO 2025-09-28 18:44:54,799 basehttp 19960 15892 "GET /polls/?page=1 HTTP/1.1" 200 1700
 INFO 2025-09-28 18:44:54,912 basehttp 19960 15892 "GET /polls/?page=1 HTTP/1.1" 200 1700
+INFO 2025-09-28 18:50:43,291 basehttp 19960 19404 "GET /auth/profile/ HTTP/1.1" 200 682
+INFO 2025-09-28 18:50:43,619 basehttp 19960 19404 "GET /auth/profile/ HTTP/1.1" 200 682
+INFO 2025-09-28 18:50:43,979 basehttp 19960 19404 "GET /polls/?page=1 HTTP/1.1" 200 1700
+INFO 2025-09-28 18:50:58,262 basehttp 19960 19816 "GET /auth/profile/ HTTP/1.1" 200 682
+INFO 2025-09-28 18:50:59,064 basehttp 19960 19816 "GET /polls/?page=1 HTTP/1.1" 200 1700
+INFO 2025-09-28 18:50:59,174 basehttp 19960 19816 "GET /polls/?page=1 HTTP/1.1" 200 1700
+INFO 2025-09-28 18:51:06,979 basehttp 19960 16432 "GET /auth/profile/ HTTP/1.1" 200 682
+INFO 2025-09-28 18:51:07,018 basehttp 19960 16432 "GET /auth/profile/ HTTP/1.1" 200 682
+INFO 2025-09-28 18:51:07,103 basehttp 19960 16432 "GET /polls/?page=1 HTTP/1.1" 200 1700
+INFO 2025-09-28 18:51:07,174 basehttp 19960 16432 "GET /polls/?page=1 HTTP/1.1" 200 1700
+INFO 2025-09-28 18:55:09,602 autoreload 19960 20736 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\views.py changed, reloading.
+INFO 2025-09-28 18:55:12,915 autoreload 8480 21280 Watching for file changes with StatReloader
+INFO 2025-09-28 18:55:39,703 autoreload 8480 21280 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\views.py changed, reloading.
+INFO 2025-09-28 18:55:46,241 autoreload 5576 17336 Watching for file changes with StatReloader
+INFO 2025-09-28 18:55:55,661 basehttp 5576 15684 "GET /auth/profile/ HTTP/1.1" 200 682
+INFO 2025-09-28 18:55:55,800 basehttp 5576 15684 "GET /auth/profile/ HTTP/1.1" 200 682
+INFO 2025-09-28 18:55:56,077 basehttp 5576 15684 "GET /polls/?page=1 HTTP/1.1" 200 1700
+INFO 2025-09-28 18:56:50,957 autoreload 5576 17336 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\views.py changed, reloading.
+INFO 2025-09-28 18:56:57,718 autoreload 17636 21184 Watching for file changes with StatReloader
