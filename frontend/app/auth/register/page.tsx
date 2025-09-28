@@ -17,6 +17,7 @@ export default function RegisterPage() {
   });
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const { state, register, clearError } = useAuth();
   const router = useRouter();
 
@@ -72,7 +73,13 @@ export default function RegisterPage() {
 
     try {
       await register(formData);
-      // Redirect will happen via useEffect when state updates
+      // Show success state briefly before redirect
+      setRegistrationSuccess(true);
+      
+      // Add a small delay to show success feedback
+      setTimeout(() => {
+        router.push('/polls');
+      }, 500);
     } catch (error) {
       // Error handling is managed by the auth context
       console.error('Registration failed:', error);
@@ -275,10 +282,21 @@ export default function RegisterPage() {
           <div>
             <button
               type="submit"
-              disabled={isSubmitting}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              disabled={isSubmitting || registrationSuccess}
+              className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                registrationSuccess
+                  ? 'bg-green-600 hover:bg-green-700 focus:ring-green-500'
+                  : 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500'
+              }`}
             >
-              {isSubmitting ? (
+              {registrationSuccess ? (
+                <div className="flex items-center">
+                  <svg className="mr-2 h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Success! Redirecting...
+                </div>
+              ) : isSubmitting ? (
                 <div className="flex items-center">
                   <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

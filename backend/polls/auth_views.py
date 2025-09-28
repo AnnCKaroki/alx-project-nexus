@@ -12,6 +12,62 @@ from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, Bl
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
+def login_user(request):
+    """Login user and return user data with tokens."""
+    try:
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        if not username or not password:
+            return Response(
+                {'error': 'Username and password are required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        user = authenticate(username=username, password=password)
+
+        if user is None:
+            return Response(
+                {'error': 'Invalid credentials'},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        if not user.is_active:
+            return Response(
+                {'error': 'Account is disabled'},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        refresh = RefreshToken.for_user(user)
+
+        return Response({
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'date_joined': user.date_joined,
+                'is_active': user.is_active,
+            },
+            'tokens': {
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }
+        }, status=status.HTTP_200_OK)
+
+    except Exception as e:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.exception("Login failed for username: %s", username)
+        return Response(
+            {'error': 'Login failed'},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
 def register_user(request):
     """Register a new user."""
     try:
@@ -48,7 +104,9 @@ def register_user(request):
         user = User.objects.create_user(
             username=username,
             email=email,
-            password=password
+            password=password,
+            first_name=request.data.get('first_name', ''),
+            last_name=request.data.get('last_name', '')
         )
 
         refresh = RefreshToken.for_user(user)
@@ -58,7 +116,11 @@ def register_user(request):
             'user': {
                 'id': user.id,
                 'username': user.username,
-                'email': user.email
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'date_joined': user.date_joined,
+                'is_active': user.is_active,
             },
             'tokens': {
                 'refresh': str(refresh),
@@ -113,6 +175,8 @@ def user_profile(request):
         'id': user.id,
         'username': user.username,
         'email': user.email,
+        'first_name': user.first_name,
+        'last_name': user.last_name,
         'date_joined': user.date_joined,
         'is_active': user.is_active
     })

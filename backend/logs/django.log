@@ -278,3 +278,154 @@ INFO 2025-09-28 15:37:11,020 autoreload 20532 8008 C:\Users\User\OneDrive\Deskto
 INFO 2025-09-28 15:37:12,793 autoreload 11588 17516 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\backend\settings.py changed, reloading.
 INFO 2025-09-28 15:37:20,043 autoreload 7864 7348 Watching for file changes with StatReloader
 INFO 2025-09-28 15:37:25,805 autoreload 19668 15196 Watching for file changes with StatReloader
+INFO 2025-09-28 15:58:58,946 autoreload 17272 17172 Watching for file changes with StatReloader
+ERROR 2025-09-28 16:00:39,247 log 7864 12900 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING 2025-09-28 16:00:39,311 basehttp 7864 12900 "GET / HTTP/1.1" 400 143
+ERROR 2025-09-28 16:01:09,165 log 7864 18148 Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+WARNING 2025-09-28 16:01:09,175 basehttp 7864 18148 "OPTIONS /auth/register/ HTTP/1.1" 400 143
+ERROR 2025-09-28 16:02:47,146 log 7864 14448 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING 2025-09-28 16:02:47,158 basehttp 7864 14448 "GET /polls/ HTTP/1.1" 400 143
+ERROR 2025-09-28 16:02:56,309 log 7864 21396 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING 2025-09-28 16:02:56,318 basehttp 7864 21396 "GET /polls/ HTTP/1.1" 400 143
+ERROR 2025-09-28 16:03:15,052 log 7864 3592 Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\middleware\security.py", line 28, in process_request
+    host = self.redirect_host or request.get_host()
+                                 ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\pollenv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING 2025-09-28 16:03:15,065 basehttp 7864 3592 "GET / HTTP/1.1" 400 143
+INFO 2025-09-28 16:05:21,556 autoreload 19668 15196 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\backend\settings.py changed, reloading.
+INFO 2025-09-28 16:05:21,585 autoreload 7864 7348 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\backend\settings.py changed, reloading.
+INFO 2025-09-28 16:05:21,623 autoreload 17272 17172 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\backend\settings.py changed, reloading.
+INFO 2025-09-28 16:05:32,198 autoreload 5564 17684 Watching for file changes with StatReloader
+INFO 2025-09-28 16:05:33,620 autoreload 14704 20156 Watching for file changes with StatReloader
+INFO 2025-09-28 16:05:33,849 autoreload 592 18388 Watching for file changes with StatReloader
+INFO 2025-09-28 16:08:41,859 autoreload 2256 16892 Watching for file changes with StatReloader
+INFO 2025-09-28 16:08:47,648 basehttp 2256 21092 "GET / HTTP/1.1" 200 290
+INFO 2025-09-28 16:08:58,983 basehttp 2256 4048 "GET / HTTP/1.1" 200 290
+INFO 2025-09-28 16:09:13,443 basehttp 2256 4048 "GET /polls HTTP/1.1" 301 0
+INFO 2025-09-28 16:09:13,728 basehttp 2256 20808 "GET /polls/ HTTP/1.1" 200 5320
+INFO 2025-09-28 16:09:13,786 basehttp 2256 20808 "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+INFO 2025-09-28 16:09:13,809 basehttp 2256 20808 "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+INFO 2025-09-28 16:09:13,831 basehttp 2256 20808 "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+INFO 2025-09-28 16:09:13,837 basehttp 2256 18804 "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+INFO 2025-09-28 16:09:13,841 basehttp 2256 13288 "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+INFO 2025-09-28 16:09:13,843 basehttp 2256 14060 "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 304 0
+INFO 2025-09-28 16:09:13,851 basehttp 2256 20808 "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+INFO 2025-09-28 16:09:13,874 basehttp 2256 18804 "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+INFO 2025-09-28 16:09:13,882 basehttp 2256 15708 "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+INFO 2025-09-28 16:09:13,908 basehttp 2256 13288 "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 304 0
+INFO 2025-09-28 16:09:13,909 basehttp 2256 7988 "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+INFO 2025-09-28 16:09:13,922 basehttp 2256 15708 "GET /static/rest_framework/img/grid.png HTTP/1.1" 304 0
+INFO 2025-09-28 16:09:20,337 basehttp 2256 15708 "GET /polls/ HTTP/1.1" 200 5320
+INFO 2025-09-28 16:09:23,630 basehttp 2256 15708 "GET /polls/?format=api HTTP/1.1" 200 5353
+INFO 2025-09-28 16:09:27,720 basehttp 2256 15708 "GET /polls/?format=api HTTP/1.1" 200 5353
+INFO 2025-09-28 16:09:28,787 basehttp 2256 15708 "GET /polls/?format=api HTTP/1.1" 200 5353
+INFO 2025-09-28 16:09:29,861 basehttp 2256 15708 "GET /polls/?format=api HTTP/1.1" 200 5353
+INFO 2025-09-28 16:11:14,379 basehttp 2256 20620 "OPTIONS /auth/register/ HTTP/1.1" 200 0
+INFO 2025-09-28 16:11:20,301 basehttp 2256 20620 "POST /auth/register/ HTTP/1.1" 201 613
+INFO 2025-09-28 16:11:42,299 basehttp 2256 2432 "OPTIONS /auth/profile/ HTTP/1.1" 200 0
+INFO 2025-09-28 16:11:42,310 basehttp 2256 1584 "OPTIONS /auth/profile/ HTTP/1.1" 200 0
+INFO 2025-09-28 16:11:42,319 basehttp 2256 2432 "GET /auth/profile/ HTTP/1.1" 200 128
+INFO 2025-09-28 16:11:42,334 basehttp 2256 2432 "GET /auth/profile/ HTTP/1.1" 200 128
+INFO 2025-09-28 16:11:42,337 basehttp 2256 1584 "OPTIONS /polls/?page=1 HTTP/1.1" 200 0
+INFO 2025-09-28 16:11:42,369 basehttp 2256 1584 "GET /polls/?page=1 HTTP/1.1" 200 223
+INFO 2025-09-28 16:11:42,396 basehttp 2256 1584 "GET /polls/?page=1 HTTP/1.1" 200 223
+INFO 2025-09-28 16:12:28,911 basehttp 2256 16196 "OPTIONS /polls/ HTTP/1.1" 200 0
+INFO 2025-09-28 16:12:28,923 middleware 2256 16196 Poll request: POST /polls/ from 127.0.0.1
+WARNING 2025-09-28 16:12:29,053 log 2256 16196 Bad Request: /polls/
+WARNING 2025-09-28 16:12:29,062 basehttp 2256 16196 "POST /polls/ HTTP/1.1" 400 44
+INFO 2025-09-28 16:12:31,484 middleware 2256 16196 Poll request: POST /polls/ from 127.0.0.1
+WARNING 2025-09-28 16:12:31,506 log 2256 16196 Bad Request: /polls/
+WARNING 2025-09-28 16:12:31,512 basehttp 2256 16196 "POST /polls/ HTTP/1.1" 400 44
+INFO 2025-09-28 16:13:02,115 autoreload 2256 16892 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\backend\settings.py changed, reloading.
+INFO 2025-09-28 16:13:07,799 autoreload 18840 5564 Watching for file changes with StatReloader
+INFO 2025-09-28 16:13:24,278 basehttp 18840 20384 "GET /polls/?format=api HTTP/1.1" 200 5353
+INFO 2025-09-28 16:15:37,940 basehttp 18840 8972 "GET /auth/profile/ HTTP/1.1" 200 128
+INFO 2025-09-28 16:28:15,186 autoreload 816 17588 Watching for file changes with StatReloader
+INFO 2025-09-28 16:28:19,959 basehttp 816 21060 "GET / HTTP/1.1" 200 290
+INFO 2025-09-28 16:28:37,485 basehttp 816 15960 "OPTIONS /auth/login/ HTTP/1.1" 200 0
+INFO 2025-09-28 16:28:41,164 basehttp 816 15960 "POST /auth/login/ HTTP/1.1" 200 489
+INFO 2025-09-28 16:28:48,120 basehttp 816 15960 "POST /auth/login/ HTTP/1.1" 200 489
+INFO 2025-09-28 16:32:29,627 autoreload 816 17588 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\auth_views.py changed, reloading.
+INFO 2025-09-28 16:32:37,376 autoreload 16132 12464 Watching for file changes with StatReloader
+INFO 2025-09-28 16:32:47,255 autoreload 16132 12464 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\backend\urls.py changed, reloading.
+INFO 2025-09-28 16:33:00,545 autoreload 20884 18492 Watching for file changes with StatReloader
+INFO 2025-09-28 16:33:09,589 autoreload 20884 18492 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\auth_views.py changed, reloading.
+INFO 2025-09-28 16:33:19,630 autoreload 3800 8084 Watching for file changes with StatReloader
+INFO 2025-09-28 17:36:45,295 autoreload 3800 8084 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\auth_views.py changed, reloading.
+INFO 2025-09-28 17:36:55,141 autoreload 17164 18376 Watching for file changes with StatReloader
+INFO 2025-09-28 17:37:01,142 autoreload 17164 18376 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\urls.py changed, reloading.
+INFO 2025-09-28 17:37:15,460 autoreload 20700 17632 Watching for file changes with StatReloader
+INFO 2025-09-28 17:41:25,518 autoreload 8208 1312 Watching for file changes with StatReloader
+INFO 2025-09-28 17:41:30,579 basehttp 8208 19004 "GET / HTTP/1.1" 200 290
+WARNING 2025-09-28 17:43:32,615 log 8208 10524 Unauthorized: /auth/profile/
+WARNING 2025-09-28 17:43:32,638 basehttp 8208 10524 "GET /auth/profile/ HTTP/1.1" 401 172
+INFO 2025-09-28 17:43:32,714 basehttp 8208 10524 "OPTIONS /auth/refresh/ HTTP/1.1" 200 0
+INFO 2025-09-28 17:43:32,877 basehttp 8208 10524 "POST /auth/refresh/ HTTP/1.1" 200 489
+INFO 2025-09-28 17:43:32,916 basehttp 8208 10524 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 17:43:55,493 basehttp 8208 19076 "POST /auth/login/ HTTP/1.1" 200 667
+INFO 2025-09-28 17:44:38,026 middleware 8208 10512 Poll request: POST /polls/ from 127.0.0.1
+INFO 2025-09-28 17:44:38,126 basehttp 8208 10512 "POST /polls/ HTTP/1.1" 201 83
+INFO 2025-09-28 17:44:48,391 basehttp 8208 15104 "OPTIONS /polls/NaN/ HTTP/1.1" 200 0
+INFO 2025-09-28 17:44:48,392 basehttp 8208 17428 "OPTIONS /polls/NaN/ HTTP/1.1" 200 0
+WARNING 2025-09-28 17:44:48,426 log 8208 15104 Not Found: /polls/NaN/
+WARNING 2025-09-28 17:44:48,433 basehttp 8208 15104 "GET /polls/NaN/ HTTP/1.1" 404 23
+WARNING 2025-09-28 17:44:48,453 log 8208 15104 Not Found: /polls/NaN/
+WARNING 2025-09-28 17:44:48,456 basehttp 8208 15104 "GET /polls/NaN/ HTTP/1.1" 404 23
+INFO 2025-09-28 17:44:51,806 basehttp 8208 15104 "GET /polls/?page=1 HTTP/1.1" 200 402
+INFO 2025-09-28 17:44:51,868 basehttp 8208 15104 "GET /polls/?page=1 HTTP/1.1" 200 402
+INFO 2025-09-28 17:47:52,735 basehttp 8208 2384 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 17:47:52,858 basehttp 8208 19792 "GET /polls/?page=1 HTTP/1.1" 200 402
+INFO 2025-09-28 17:48:37,045 basehttp 8208 16508 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 17:48:37,062 basehttp 8208 820 "GET /polls/?page=1 HTTP/1.1" 200 402

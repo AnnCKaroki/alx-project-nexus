@@ -25,13 +25,14 @@ export default function PollsPage() {
       setError(null);
 
       const response: PaginatedResponse<Poll> = await apiClient.getPolls(page, search);
-      setPolls(response.results);
-      setTotalCount(response.count);
+      setPolls(response.results || []);
+      setTotalCount(response.count || 0);
       setHasNext(!!response.next);
       setHasPrevious(!!response.previous);
       setCurrentPage(page);
     } catch (err) {
       setError('Failed to fetch polls. Please try again.');
+      setPolls([]); // Ensure polls is always an array
       console.error('Error fetching polls:', err);
     } finally {
       setLoading(false);
@@ -130,7 +131,7 @@ export default function PollsPage() {
         )}
 
         {/* Empty state */}
-        {!loading && polls.length === 0 && !error && (
+        {!loading && (!polls || polls.length === 0) && !error && (
           <div className="text-center py-12">
             <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
@@ -153,7 +154,7 @@ export default function PollsPage() {
         )}
 
         {/* Polls grid */}
-        {!loading && polls.length > 0 && (
+        {!loading && polls && polls.length > 0 && (
           <>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {polls.map((poll) => (

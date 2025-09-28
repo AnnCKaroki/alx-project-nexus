@@ -23,7 +23,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView,
 )
-from polls.auth_views import register_user, logout_user, user_profile
+from polls.auth_views import register_user, login_user, logout_user, user_profile
 
 def api_root(request):
     """Root API endpoint with available endpoints"""
@@ -48,7 +48,7 @@ urlpatterns = [
     path('', api_root, name='api_root'),  # Root endpoint
     path('admin/', admin.site.urls),
     # Authentication endpoints
-    path('auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('auth/login/', login_user, name='login'),
     path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('auth/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('auth/register/', register_user, name='register'),

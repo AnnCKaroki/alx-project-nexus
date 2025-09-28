@@ -148,28 +148,34 @@ class APIClient {
     }
 
     const response: AxiosResponse<PaginatedResponse<Poll>> = await this.client.get(
-      `/polls/api/polls/?${params.toString()}`
+      `/polls/?${params.toString()}`
     );
     return response.data;
   }
 
   async getPoll(id: number): Promise<Poll> {
-    const response: AxiosResponse<Poll> = await this.client.get(`/polls/api/polls/${id}/`);
+    const response: AxiosResponse<Poll> = await this.client.get(`/polls/${id}/`);
     return response.data;
   }
 
   async createPoll(pollData: CreatePollData): Promise<Poll> {
-    const response: AxiosResponse<Poll> = await this.client.post('/polls/api/polls/', pollData);
+    // Transform frontend format to backend format
+    const backendData = {
+      question: pollData.question,
+      description: pollData.description,
+      choices_data: pollData.choices.map(choice => choice.choice_text)
+    };
+    const response: AxiosResponse<Poll> = await this.client.post('/polls/', backendData);
     return response.data;
   }
 
   async deletePoll(id: number): Promise<void> {
-    await this.client.delete(`/polls/api/polls/${id}/`);
+    await this.client.delete(`/polls/${id}/`);
   }
 
   // Record user vote with immediate result reflection
   async vote(pollId: number, choiceId: number): Promise<Vote> {
-    const response: AxiosResponse<Vote> = await this.client.post('/polls/api/votes/', {
+    const response: AxiosResponse<Vote> = await this.client.post('/polls/votes/', {
       poll: pollId,
       choice: choiceId,
     });
@@ -177,7 +183,7 @@ class APIClient {
   }
 
   async getUserVotes(): Promise<Vote[]> {
-    const response: AxiosResponse<Vote[]> = await this.client.get('/polls/api/votes/history/');
+    const response: AxiosResponse<Vote[]> = await this.client.get('/polls/votes/history/');
     return response.data;
   }
 

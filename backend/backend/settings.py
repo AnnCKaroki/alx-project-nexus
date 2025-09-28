@@ -59,15 +59,23 @@ else:
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # ALLOWED_HOSTS configuration
+DEBUG = os.environ.get('DEBUG', 'True').lower() in ['true', '1', 'yes']
+
+# Debug output
+print(f"DEBUG setting: {DEBUG}")
+print(f"DEBUG from env: {os.environ.get('DEBUG', 'True')}")
+
 if DEBUG:
     # Development: Allow all hosts including localhost variations
     ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1', '0.0.0.0']
+    print(f"ALLOWED_HOSTS (DEBUG=True): {ALLOWED_HOSTS}")
 else:
     # Production: Only allow specific hosts from environment variable
     hosts_env = os.environ.get('ALLOWED_HOSTS', '')
     if not hosts_env:
         raise ImproperlyConfigured('ALLOWED_HOSTS environment variable must be set when DEBUG=False')
     ALLOWED_HOSTS = [host.strip() for host in hosts_env.split(',') if host.strip()]
+    print(f"ALLOWED_HOSTS (DEBUG=False): {ALLOWED_HOSTS}")
 
 
 # Application definition
