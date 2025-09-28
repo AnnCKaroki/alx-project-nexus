@@ -169,14 +169,31 @@ def logout_user(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def user_profile(request):
-    """Get current user profile."""
+    """Get current user profile with statistics."""
+    from .models import Poll, Vote
+    from .serializers import UserVoteHistorySerializer
+
     user = request.user
+
+    # Calculate statistics
+    polls_created_count = Poll.objects.filter(created_by=user).count()
+    votes_cast_count = Vote.objects.filter(user=user).count()
+
+    # Get recent votes (last 10)
+    recent_votes = Vote.objects.filter(user=user).order_by('-voted_at')[:10]
+    recent_votes_data = UserVoteHistorySerializer(recent_votes, many=True).data
+
     return Response({
-        'id': user.id,
-        'username': user.username,
-        'email': user.email,
-        'first_name': user.first_name,
-        'last_name': user.last_name,
-        'date_joined': user.date_joined,
-        'is_active': user.is_active
+        'user': {
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'date_joined': user.date_joined,
+            'is_active': user.is_active
+        },
+        'polls_created': polls_created_count,
+        'votes_cast': votes_cast_count,
+        'recent_votes': recent_votes_data
     })

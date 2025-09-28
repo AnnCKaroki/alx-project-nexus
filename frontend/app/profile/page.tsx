@@ -29,11 +29,25 @@ export default function ProfilePage() {
 
         // Fetch user profile
         const profileData = await apiClient.getUserProfile();
+        console.log('Profile data received:', profileData);
         setProfile(profileData);
 
         // Fetch user's polls by filtering all polls for the user
         const allPolls = await apiClient.getPolls(1);
+        console.log('=== PROFILE DEBUG ===');
+        console.log('All polls received:', allPolls);
+        console.log('Current user:', state.user);
+        console.log('User ID:', state.user!.id, '(type:', typeof state.user!.id, ')');
+
+        if (allPolls.results) {
+          allPolls.results.forEach(poll => {
+            console.log(`Poll ${poll.id}: "${poll.question}" created_by=${poll.created_by} (type: ${typeof poll.created_by}), matches user: ${poll.created_by === state.user!.id}`);
+          });
+        }
+
         const userCreatedPolls = (allPolls.results || []).filter(poll => poll.created_by === state.user!.id);
+        console.log('Filtered user created polls:', userCreatedPolls);
+        console.log('=== END DEBUG ===');
         setUserPolls(userCreatedPolls);
       } catch (err) {
         setError('Failed to load profile data. Please try again.');
