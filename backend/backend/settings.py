@@ -273,7 +273,7 @@ SIMPLE_JWT = {
 # CORS Configuration
 # Allow frontend origins for development and production
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # React development server
+    "http://localhost:3000",  # Next.js development server
     "http://127.0.0.1:3000",
 ]
 
@@ -282,7 +282,20 @@ if not DEBUG:
     production_origins = os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',')
     CORS_ALLOWED_ORIGINS.extend([origin.strip() for origin in production_origins if origin.strip()])
 
+# CORS settings for API requests and JWT authentication
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = False  # Security: only allow specified origins
+CORS_ALLOWED_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
 
 # Security Settings
 SECURE_BROWSER_XSS_FILTER = True
