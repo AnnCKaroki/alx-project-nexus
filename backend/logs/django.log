@@ -435,3 +435,25 @@ INFO 2025-09-28 17:52:34,926 autoreload 15984 18476 C:\Users\User\OneDrive\Deskt
 INFO 2025-09-28 17:52:40,655 autoreload 17708 18248 Watching for file changes with StatReloader
 INFO 2025-09-28 17:52:51,123 autoreload 17708 18248 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\auth_views.py changed, reloading.
 INFO 2025-09-28 17:52:56,492 autoreload 17532 20552 Watching for file changes with StatReloader
+INFO 2025-09-28 17:54:39,973 basehttp 17532 7224 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 17:54:56,580 basehttp 17532 12784 "GET /polls/?page=1 HTTP/1.1" 200 402
+INFO 2025-09-28 17:54:56,608 basehttp 17532 12784 "GET /polls/?page=1 HTTP/1.1" 200 402
+INFO 2025-09-28 17:54:58,830 basehttp 17532 14812 "POST /auth/login/ HTTP/1.1" 200 667
+INFO 2025-09-28 17:55:19,546 middleware 17532 14476 Poll request: POST /polls/ from 127.0.0.1
+INFO 2025-09-28 17:55:19,611 basehttp 17532 14476 "POST /polls/ HTTP/1.1" 201 73
+WARNING 2025-09-28 17:55:25,892 log 17532 14476 Not Found: /polls/NaN/
+WARNING 2025-09-28 17:55:25,898 basehttp 17532 14476 "GET /polls/NaN/ HTTP/1.1" 404 23
+WARNING 2025-09-28 17:55:25,910 log 17532 14476 Not Found: /polls/NaN/
+WARNING 2025-09-28 17:55:25,920 basehttp 17532 14476 "GET /polls/NaN/ HTTP/1.1" 404 23
+WARNING 2025-09-28 17:55:56,778 log 17532 16120 Not Found: /polls/NaN/
+WARNING 2025-09-28 17:55:56,784 basehttp 17532 16120 "GET /polls/NaN/ HTTP/1.1" 404 23
+INFO 2025-09-28 18:00:45,561 basehttp 17532 1308 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 18:02:56,437 basehttp 17532 16532 "GET /polls/?page=1 HTTP/1.1" 200 571
+INFO 2025-09-28 18:02:56,480 basehttp 17532 16532 "GET /polls/?page=1 HTTP/1.1" 200 571
+INFO 2025-09-28 18:03:15,956 middleware 17532 16532 Poll request: POST /polls/ from 127.0.0.1
+INFO 2025-09-28 18:03:16,027 basehttp 17532 16532 "POST /polls/ HTTP/1.1" 201 73
+INFO 2025-09-28 18:04:49,285 autoreload 17532 20552 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\serializers.py changed, reloading.
+INFO 2025-09-28 18:04:54,583 autoreload 17216 15484 Watching for file changes with StatReloader
+INFO 2025-09-28 18:06:07,354 basehttp 17216 12384 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 18:06:53,634 autoreload 17216 15484 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\serializers.py changed, reloading.
+INFO 2025-09-28 18:07:00,197 autoreload 7164 2424 Watching for file changes with StatReloader

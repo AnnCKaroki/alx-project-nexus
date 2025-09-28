@@ -166,6 +166,10 @@ class APIClient {
       choices_data: pollData.choices.map(choice => choice.choice_text)
     };
     const response: AxiosResponse<Poll> = await this.client.post('/polls/', backendData);
+
+    // Debug log to see what we're getting back
+    console.log('Poll creation response:', response.data);
+
     return response.data;
   }
 

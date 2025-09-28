@@ -121,7 +121,8 @@ class PollCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Poll
-        fields = ['question', 'description', 'is_active', 'choices_data']
+        fields = ['id', 'question', 'description', 'is_active', 'choices_data']
+        read_only_fields = ['id']
 
     def create(self, validated_data):
         """Create poll with associated choices."""
