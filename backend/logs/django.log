@@ -429,3 +429,9 @@ INFO 2025-09-28 17:47:52,735 basehttp 8208 2384 "GET /auth/profile/ HTTP/1.1" 20
 INFO 2025-09-28 17:47:52,858 basehttp 8208 19792 "GET /polls/?page=1 HTTP/1.1" 200 402
 INFO 2025-09-28 17:48:37,045 basehttp 8208 16508 "GET /auth/profile/ HTTP/1.1" 200 159
 INFO 2025-09-28 17:48:37,062 basehttp 8208 820 "GET /polls/?page=1 HTTP/1.1" 200 402
+INFO 2025-09-28 17:51:33,872 autoreload 8208 1312 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\auth_views.py changed, reloading.
+INFO 2025-09-28 17:51:47,137 autoreload 15984 18476 Watching for file changes with StatReloader
+INFO 2025-09-28 17:52:34,926 autoreload 15984 18476 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\auth_views.py changed, reloading.
+INFO 2025-09-28 17:52:40,655 autoreload 17708 18248 Watching for file changes with StatReloader
+INFO 2025-09-28 17:52:51,123 autoreload 17708 18248 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\auth_views.py changed, reloading.
+INFO 2025-09-28 17:52:56,492 autoreload 17532 20552 Watching for file changes with StatReloader
