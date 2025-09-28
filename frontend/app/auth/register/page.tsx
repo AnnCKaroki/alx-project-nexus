@@ -27,14 +27,6 @@ export default function RegisterPage() {
     }
   }, [state.isAuthenticated, router]);
 
-  // Clear errors when user starts typing
-  useEffect(() => {
-    if (state.error || Object.keys(validationErrors).length > 0) {
-      clearError();
-      setValidationErrors({});
-    }
-  }, [formData.username, formData.email, formData.password, state.error, clearError, validationErrors]);
-
   // Client-side validation
   const validateForm = (): ValidationErrors => {
     const errors: ValidationErrors = {};
@@ -91,6 +83,19 @@ export default function RegisterPage() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    if (state.error) {
+      clearError();
+    }
+    if (Object.keys(validationErrors).length > 0) {
+      setValidationErrors(prev => {
+        if (!(name in prev)) {
+          return prev;
+        }
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { [name]: _, ...rest } = prev;
+        return rest;
+      });
+    }
     setFormData(prev => ({
       ...prev,
       [name]: value,

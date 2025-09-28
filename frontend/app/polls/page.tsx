@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Poll, PaginatedResponse } from '@/types';
 import { useAuth } from '@/contexts/AuthContext';
 import apiClient from '@/lib/api';
+import { formatDate } from '@/lib/utils';
 
 export default function PollsPage() {
   const [polls, setPolls] = useState<Poll[]>([]);
@@ -50,15 +51,6 @@ export default function PollsPage() {
   // Handle pagination
   const handlePageChange = (newPage: number) => {
     fetchPolls(newPage, searchQuery);
-  };
-
-  // Format date for display
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
   };
 
   // Calculate polls per page for pagination display

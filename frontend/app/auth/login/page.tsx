@@ -22,13 +22,6 @@ export default function LoginPage() {
     }
   }, [state.isAuthenticated, router]);
 
-  // Clear errors when user starts typing
-  useEffect(() => {
-    if (state.error) {
-      clearError();
-    }
-  }, [credentials.username, credentials.password, state.error, clearError]);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -46,6 +39,9 @@ export default function LoginPage() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    if (state.error) {
+      clearError();
+    }
     setCredentials(prev => ({
       ...prev,
       [name]: value,

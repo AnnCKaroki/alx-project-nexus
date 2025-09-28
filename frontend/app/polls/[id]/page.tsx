@@ -5,14 +5,37 @@ import Link from 'next/link';
 import { Poll, Choice } from '@/types';
 import { useAuth } from '@/contexts/AuthContext';
 import apiClient from '@/lib/api';
+import { calculatePercentage, formatDateWithTime } from '@/lib/utils';
 
 interface PollDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default function PollDetailPage({ params }: PollDetailPageProps) {
+  const [pollId, setPollId] = useState<string | null>(null);
+
+  // Handle async params
+  useEffect(() => {
+    params.then(({ id }) => {
+      setPollId(id);
+    });
+  }, [params]);
+
+  // Don't render until we have the poll ID
+  if (!pollId) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  return <PollDetailPageClient pollId={pollId} />;
+}
+
+function PollDetailPageClient({ pollId }: { pollId: string }) {
   const [poll, setPoll] = useState<Poll | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,7 +50,7 @@ export default function PollDetailPage({ params }: PollDetailPageProps) {
       setLoading(true);
       setError(null);
 
-      const pollData = await apiClient.getPoll(parseInt(params.id));
+      const pollData = await apiClient.getPoll(parseInt(pollId));
       setPoll(pollData);
 
       // Set selected choice if user has already voted
@@ -40,7 +63,7 @@ export default function PollDetailPage({ params }: PollDetailPageProps) {
     } finally {
       setLoading(false);
     }
-  }, [params.id]);
+  }, [pollId]);
 
   useEffect(() => {
     fetchPoll();
@@ -54,7 +77,7 @@ export default function PollDetailPage({ params }: PollDetailPageProps) {
     setVoteError(null);
 
     try {
-      await apiClient.vote(parseInt(params.id), selectedChoiceId);
+      await apiClient.vote(parseInt(pollId), selectedChoiceId);
       // Refresh poll data to show updated results
       await fetchPoll();
     } catch (err) {
@@ -63,22 +86,6 @@ export default function PollDetailPage({ params }: PollDetailPageProps) {
     } finally {
       setIsVoting(false);
     }
-  };
-
-  // Calculate vote percentage
-  const calculatePercentage = (votes: number, total: number): number => {
-    return total > 0 ? Math.round((votes / total) * 100) : 0;
-  };
-
-  // Format date for display
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
   };
 
   // Loading state
@@ -197,7 +204,7 @@ export default function PollDetailPage({ params }: PollDetailPageProps) {
                 <svg className="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                Published {formatDate(poll.pub_date)}
+                Published {formatDateWithTime(poll.pub_date)}
               </div>
 
               {poll.created_by_username && (
