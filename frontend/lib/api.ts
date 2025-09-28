@@ -126,12 +126,18 @@ class APIClient {
       throw new Error('No refresh token available');
     }
 
-    const response: AxiosResponse<AuthTokens> = await this.client.post('/auth/refresh/', {
-      refresh: refreshToken,
-    });
+    try {
+      const response: AxiosResponse<AuthTokens> = await this.client.post('/auth/refresh/', {
+        refresh: refreshToken,
+      });
 
-    this.setTokens(response.data);
-    return response.data;
+      this.setTokens(response.data);
+      return response.data;
+    } catch {
+      // Clear invalid tokens and force re-authentication
+      this.clearTokens();
+      throw new Error('Token refresh failed');
+    }
   }
 
   async getCurrentUser(): Promise<User> {
