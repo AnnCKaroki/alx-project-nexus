@@ -180,7 +180,6 @@ class APIClient {
   // Record user vote with immediate result reflection
   async vote(pollId: number, choiceId: number): Promise<Vote> {
     const response: AxiosResponse<Vote> = await this.client.post('/polls/votes/', {
-      poll: pollId,
       choice: choiceId,
     });
     return response.data;

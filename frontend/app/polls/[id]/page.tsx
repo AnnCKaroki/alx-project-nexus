@@ -267,7 +267,7 @@ function PollDetailPageClient({ pollId }: { pollId: string }) {
 
             <div className="space-y-4">
               {poll.choices.map((choice: Choice) => {
-                const percentage = calculatePercentage(choice.votes, poll.total_votes);
+                const percentage = calculatePercentage(choice.vote_count, poll.total_votes);
                 const isSelected = selectedChoiceId === choice.id;
                 const isUserChoice = hasVoted && poll.user_choice_id === choice.id;
 
@@ -280,7 +280,7 @@ function PollDetailPageClient({ pollId }: { pollId: string }) {
                       }`}>
                         <div className="flex justify-between items-center mb-2">
                           <span className="font-medium text-gray-900">
-                            {choice.choice_text}
+                            {choice.text}
                             {isUserChoice && (
                               <span className="ml-2 text-sm text-green-600 font-medium">
                                 (Your choice)
@@ -288,7 +288,7 @@ function PollDetailPageClient({ pollId }: { pollId: string }) {
                             )}
                           </span>
                           <span className="text-sm font-medium text-gray-600">
-                            {choice.votes} votes ({percentage}%)
+                            {choice.vote_count} votes ({percentage}%)
                           </span>
                         </div>
 
@@ -318,7 +318,7 @@ function PollDetailPageClient({ pollId }: { pollId: string }) {
                           className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                         />
                         <span className="ml-3 text-gray-900 font-medium">
-                          {choice.choice_text}
+                          {choice.text}
                         </span>
                       </label>
                     )}

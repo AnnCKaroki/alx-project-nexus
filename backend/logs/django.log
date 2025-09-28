@@ -457,3 +457,21 @@ INFO 2025-09-28 18:04:54,583 autoreload 17216 15484 Watching for file changes wi
 INFO 2025-09-28 18:06:07,354 basehttp 17216 12384 "GET /auth/profile/ HTTP/1.1" 200 159
 INFO 2025-09-28 18:06:53,634 autoreload 17216 15484 C:\Users\User\OneDrive\Desktop\PROJECTS\voting-app\backend\polls\serializers.py changed, reloading.
 INFO 2025-09-28 18:07:00,197 autoreload 7164 2424 Watching for file changes with StatReloader
+INFO 2025-09-28 18:07:11,967 basehttp 7164 20828 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 18:07:59,118 basehttp 7164 17172 "GET /polls/?page=1 HTTP/1.1" 200 740
+INFO 2025-09-28 18:07:59,166 basehttp 7164 17172 "GET /polls/?page=1 HTTP/1.1" 200 740
+INFO 2025-09-28 18:08:15,542 middleware 7164 18452 Poll request: POST /polls/ from 127.0.0.1
+INFO 2025-09-28 18:08:15,563 basehttp 7164 18452 "POST /polls/ HTTP/1.1" 201 80
+INFO 2025-09-28 18:08:16,850 basehttp 7164 18452 "OPTIONS /polls/5/ HTTP/1.1" 200 0
+INFO 2025-09-28 18:08:16,863 basehttp 7164 18452 "OPTIONS /polls/5/ HTTP/1.1" 200 0
+INFO 2025-09-28 18:08:16,899 basehttp 7164 18688 "GET /polls/5/ HTTP/1.1" 200 442
+INFO 2025-09-28 18:08:16,931 basehttp 7164 18688 "GET /polls/5/ HTTP/1.1" 200 442
+INFO 2025-09-28 18:08:32,175 basehttp 7164 20036 "OPTIONS /polls/votes/ HTTP/1.1" 200 0
+INFO 2025-09-28 18:08:32,180 middleware 7164 20036 Poll request: POST /polls/votes/ from 127.0.0.1
+WARNING 2025-09-28 18:08:32,190 log 7164 20036 Method Not Allowed: /polls/votes/
+WARNING 2025-09-28 18:08:32,191 basehttp 7164 20036 "POST /polls/votes/ HTTP/1.1" 405 41
+INFO 2025-09-28 18:10:26,922 basehttp 7164 20816 "GET /auth/profile/ HTTP/1.1" 200 159
+INFO 2025-09-28 18:10:26,957 basehttp 7164 20816 "GET /polls/5/ HTTP/1.1" 200 442
+INFO 2025-09-28 18:10:26,992 basehttp 7164 20816 "GET /polls/5/ HTTP/1.1" 200 442
+INFO 2025-09-28 18:11:36,878 basehttp 7164 18696 "GET /polls/5/ HTTP/1.1" 200 442
+INFO 2025-09-28 18:11:54,538 basehttp 7164 18732 "GET /polls/5/ HTTP/1.1" 200 442

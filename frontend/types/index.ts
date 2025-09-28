@@ -40,9 +40,9 @@ export interface AuthResponse {
 // Individual poll option with vote tracking
 export interface Choice {
   id: number;
-  choice_text: string;
-  votes: number;
-  poll: number;
+  text: string;
+  vote_count: number;
+  created_at: string;
 }
 
 // Complete poll data with creator info and voting status
